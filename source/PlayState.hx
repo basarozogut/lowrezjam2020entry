@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -14,8 +15,6 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
-		super.create();
-
 		loadLevel();
 
 		_player = new Player(16, 16);
@@ -23,6 +22,13 @@ class PlayState extends FlxState
 
 		_actors = new FlxGroup();
 		_actors.add(_player);
+
+		FlxG.camera.setScrollBoundsRect(0, 0, cast(_tilemap.width, Int), cast(_tilemap.height, Int), true);
+		FlxG.camera.follow(_player, PLATFORMER, .3);
+
+		bgColor = 0xFF0fb7ff;
+
+		super.create();
 	}
 
 	override public function update(elapsed:Float)
@@ -35,17 +41,7 @@ class PlayState extends FlxState
 	private function loadLevel()
 	{
 		_tilemap = new FlxTilemap();
-		var tilemapArray = [
-			[1, 1, 1, 1, 1, 1, 1, 1],
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[1, 1, 1, 1, 0, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[1, 1, 1, 1, 1, 1, 1, 1]
-		];
-		_tilemap.loadMapFrom2DArray(tilemapArray, AssetPaths.tileset__png, 8, 8);
+		_tilemap.loadMapFromGraphic(AssetPaths.level_1__png, true, 1, null, AssetPaths.tileset__png, 8, 8);
 		add(_tilemap);
 	}
 }
