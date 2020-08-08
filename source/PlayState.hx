@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.tile.FlxTilemap;
@@ -15,6 +16,11 @@ class PlayState extends FlxState
 
 	override public function create()
 	{
+		var background = new FlxSprite();
+		background.loadGraphic(AssetPaths.background_1__png, false, 64, 64);
+		background.scrollFactor.set(0, 0);
+		add(background);
+
 		loadLevel();
 
 		_player = new Player(16, 16);
@@ -25,8 +31,6 @@ class PlayState extends FlxState
 
 		FlxG.camera.setScrollBoundsRect(0, 0, cast(_tilemap.width, Int), cast(_tilemap.height, Int), true);
 		FlxG.camera.follow(_player, PLATFORMER, .3);
-
-		bgColor = 0xFF0fb7ff;
 
 		super.create();
 	}
@@ -41,7 +45,7 @@ class PlayState extends FlxState
 	private function loadLevel()
 	{
 		_tilemap = new FlxTilemap();
-		_tilemap.loadMapFromGraphic(AssetPaths.level_1__png, true, 1, null, AssetPaths.tileset__png, 8, 8);
+		_tilemap.loadMapFromGraphic(AssetPaths.level_2__png, true, 1, null, AssetPaths.tileset__png, 8, 8);
 		add(_tilemap);
 	}
 }
