@@ -14,8 +14,14 @@ class Player extends FlxSprite
 	private var _forceStartPosition:FlxPoint;
 	private var _forceEndPosition:FlxPoint;
 	private var _dragging:Bool;
+	private var _canJump:Bool = false;
+	private var _canJumpOnAir:Bool = false;
+	private var _jumpCount:Int = 0;
+	private var _maxJumpCount:Int = 2;
 
 	private var _jumpSound:FlxSound = FlxG.sound.load(AssetPaths.jump__wav);
+	private var _secondJumpSound:FlxSound = FlxG.sound.load(AssetPaths.second_jump__wav);
+	private var _landSound:FlxSound = FlxG.sound.load(AssetPaths.land__wav);
 
 	public function new(x:Float = 0, y:Float = 0)
 	{
@@ -25,6 +31,11 @@ class Player extends FlxSprite
 
 		setFacingFlip(FlxObject.LEFT, true, false);
 		setFacingFlip(FlxObject.RIGHT, false, false);
+
+		// bounding box
+		width = 6;
+		height = 7;
+		offset.set(1, 1);
 
 		// physics
 		acceleration.y = 240;
@@ -55,16 +66,34 @@ class Player extends FlxSprite
 
 		_forceStartPosition = new FlxPoint();
 		_forceEndPosition = new FlxPoint();
-
-		FlxG.watch.add(this, "velocity");
 	}
 
 	override public function update(elapsed:Float)
 	{
+		updateFlags();
 		updateInput();
 		updateAnimations();
 
 		super.update(elapsed);
+	}
+
+	private function updateFlags()
+	{
+		if (justTouched(FlxObject.FLOOR))
+		{
+			_landSound.play();
+		}
+
+		if (isTouching(FlxObject.FLOOR))
+		{
+			_canJump = true;
+			_canJumpOnAir = false;
+			_jumpCount = 0;
+		}
+		else
+		{
+			_canJump = false;
+		}
 	}
 
 	private function updateInput()
@@ -76,7 +105,7 @@ class Player extends FlxSprite
 			_dragging = true;
 		}
 
-		if (FlxG.mouse.justReleased)
+		if (_dragging && FlxG.mouse.justReleased)
 		{
 			_forceEndPosition.x = FlxG.mouse.x;
 			_forceEndPosition.y = FlxG.mouse.y;
@@ -141,13 +170,22 @@ class Player extends FlxSprite
 
 	private function throwPlayer()
 	{
-		var forceVector = new FlxVector(_forceEndPosition.x - _forceStartPosition.x, _forceEndPosition.y - _forceStartPosition.y);
-		// forceVector.truncate(30);
-		forceVector.scale(-3);
-		velocity.x = forceVector.x;
-		velocity.y = forceVector.y;
+		if (_canJump || (_canJumpOnAir && _jumpCount < _maxJumpCount))
+		{
+			var forceVector = new FlxVector(_forceEndPosition.x - _forceStartPosition.x, _forceEndPosition.y - _forceStartPosition.y);
+			// forceVector.truncate(30);
+			forceVector.scale(-3);
+			velocity.x = forceVector.x;
+			velocity.y = forceVector.y;
 
-		_jumpSound.play();
+			if (_jumpCount == 0)
+				_jumpSound.play();
+			else
+				_secondJumpSound.play();
+
+			_jumpCount++;
+			_canJumpOnAir = true;
+		}
 	}
 }
 

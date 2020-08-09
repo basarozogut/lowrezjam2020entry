@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
+import flixel.system.debug.log.BitmapLog.BitmapLogEntry;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 
@@ -22,6 +23,8 @@ class PlayState extends FlxState
 		add(background);
 
 		loadLevel();
+		generateBackgroundTiles();
+		add(_tilemap);
 
 		_player = new Player(16, 16);
 		add(_player);
@@ -32,11 +35,18 @@ class PlayState extends FlxState
 		FlxG.camera.setScrollBoundsRect(0, 0, cast(_tilemap.width, Int), cast(_tilemap.height, Int), true);
 		FlxG.camera.follow(_player, PLATFORMER, .3);
 
+		bgColor = 0xff55ed8d;
+
 		super.create();
 	}
 
 	override public function update(elapsed:Float)
 	{
+		if (FlxG.keys.justPressed.SPACE)
+		{
+			FlxG.resetGame();
+		}
+
 		super.update(elapsed);
 
 		FlxG.collide(_tilemap, _actors);
@@ -46,6 +56,30 @@ class PlayState extends FlxState
 	{
 		_tilemap = new FlxTilemap();
 		_tilemap.loadMapFromGraphic(AssetPaths.level_2__png, true, 1, null, AssetPaths.tileset__png, 8, 8);
-		add(_tilemap);
+	}
+
+	private function generateBackgroundTiles()
+	{
+		var tileSize = 4;
+		var nTilesHorizontal = cast(_tilemap.width / tileSize, Int);
+		var nTilesVertical = cast(64 / tileSize / 3, Int);
+		var map = [];
+
+		for (i in 0...nTilesVertical)
+		{
+			var row = [];
+			for (j in 0...nTilesHorizontal)
+			{
+				var solid = FlxG.random.bool(20);
+				row.push(solid ? 1 : 0);
+			}
+			map.push(row);
+		}
+
+		var bgTilemap = new FlxTilemap();
+		bgTilemap.loadMapFrom2DArray(map, AssetPaths.tileset_bg__png, tileSize, tileSize);
+		bgTilemap.scrollFactor.set(0.2, 0.2);
+		bgTilemap.y = _tilemap.y + _tilemap.height - bgTilemap.height;
+		add(bgTilemap);
 	}
 }
