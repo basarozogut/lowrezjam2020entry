@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
-import flixel.system.debug.log.BitmapLog.BitmapLogEntry;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 
