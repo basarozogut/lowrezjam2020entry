@@ -162,10 +162,13 @@ class Player extends FlxSprite
 			{
 				facing = FlxObject.RIGHT;
 			}
-
-			if (velocity.x < 0)
+			else if (velocity.x < 0)
 			{
 				facing = FlxObject.LEFT;
+			}
+			else
+			{
+				facing = FlxG.mouse.x > x ? FlxObject.RIGHT : FlxObject.LEFT;
 			}
 		}
 	}
