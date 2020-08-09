@@ -23,6 +23,8 @@ class Player extends FlxSprite
 	private var _jumpCount:Int = 0;
 	private var _maxJumpCount:Int = 2;
 
+	private static inline var _throwScale:Float = -3;
+
 	private var _jumpSound:FlxSound = FlxG.sound.load(AssetPaths.jump__wav);
 	private var _secondJumpSound:FlxSound = FlxG.sound.load(AssetPaths.second_jump__wav);
 	private var _landSound:FlxSound = FlxG.sound.load(AssetPaths.land__wav);
@@ -30,8 +32,8 @@ class Player extends FlxSprite
 	private var _predictor:MovementPredictor;
 	private var _predictedPoints:Array<FlxPoint>;
 
-	static inline var _maxPredictions:Int = 100;
-	static inline var _predictionTimeSlice:Float = .01;
+	private static inline var _maxPredictions:Int = 100;
+	private static inline var _predictionTimeSlice:Float = .01;
 
 	public function new(x:Float = 0, y:Float = 0, guide:FlxSprite, predictor:MovementPredictor)
 	{
@@ -53,7 +55,6 @@ class Player extends FlxSprite
 		// physics
 		acceleration.y = 240;
 		drag.x = 10;
-		// elasticity = .9;
 
 		// Animations
 		// idle
@@ -90,6 +91,11 @@ class Player extends FlxSprite
 		}
 	}
 
+	public function hitTilemap()
+	{
+		_landSound.play();
+	}
+
 	override public function update(elapsed:Float)
 	{
 		updateFlags();
@@ -102,11 +108,6 @@ class Player extends FlxSprite
 
 	private function updateFlags()
 	{
-		if (justTouched(FlxObject.FLOOR))
-		{
-			_landSound.play();
-		}
-
 		if (isTouching(FlxObject.FLOOR))
 		{
 			_canJump = true;
@@ -144,7 +145,7 @@ class Player extends FlxSprite
 			var forceEndX = FlxG.mouse.screenX;
 			var forceEndY = FlxG.mouse.screenY;
 			var forceVector = new FlxVector(forceEndX - _forceStartPosition.x, forceEndY - _forceStartPosition.y);
-			forceVector.scale(-3);
+			forceVector.scale(_throwScale);
 			_predictor.PredictMovement(forceVector, x + width / 2 - FlxG.camera.scroll.x, y + height / 2 - FlxG.camera.scroll.y, _predictionTimeSlice,
 				_maxPredictions, _predictedPoints);
 			if (FlxG.mouse.x < x)
@@ -194,6 +195,7 @@ class Player extends FlxSprite
 				if (Math.abs(velocity.x) > 0)
 				{
 					animation.play(Animation.WALK);
+					animation.curAnim.frameRate = Math.abs(velocity.x) * .5;
 				}
 				else
 				{
@@ -221,8 +223,7 @@ class Player extends FlxSprite
 		if (canJump())
 		{
 			var forceVector = new FlxVector(_forceEndPosition.x - _forceStartPosition.x, _forceEndPosition.y - _forceStartPosition.y);
-			// forceVector.truncate(30);
-			forceVector.scale(-3);
+			forceVector.scale(_throwScale);
 			velocity.x = forceVector.x;
 			velocity.y = forceVector.y;
 

@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
@@ -56,7 +57,19 @@ class PlayState extends FlxState
 
 		super.update(elapsed);
 
-		FlxG.collide(_tilemap, _actors);
+		FlxG.collide(_tilemap, _actors, tilemapCollidedActor);
+	}
+
+	private function tilemapCollidedActor(a:FlxObject, b:FlxObject)
+	{
+		if ((b is Player))
+		{
+			if (b.justTouched(FlxObject.ANY))
+			{
+				var player:Player = cast b;
+				player.hitTilemap();
+			}
+		}
 	}
 
 	private function loadLevel()
