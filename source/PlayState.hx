@@ -31,7 +31,8 @@ class PlayState extends FlxState
 		generateBackgroundTiles();
 		add(_tilemap);
 
-		_player = new Player(16, 16, _guide);
+		var predictor = new MovementPredictor(0, 0);
+		_player = new Player(16, 16, _guide, predictor);
 		add(_player);
 
 		_actors = new FlxGroup();

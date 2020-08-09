@@ -9,6 +9,7 @@ import flixel.system.FlxAssets;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
+import lime.utils.Preloader;
 
 class Player extends FlxSprite
 {
@@ -28,11 +29,18 @@ class Player extends FlxSprite
 	private var _secondJumpSound:FlxSound = FlxG.sound.load(AssetPaths.second_jump__wav);
 	private var _landSound:FlxSound = FlxG.sound.load(AssetPaths.land__wav);
 
-	public function new(x:Float = 0, y:Float = 0, guide:FlxSprite)
+	private var _predictor:MovementPredictor;
+	private var _predictedPoints:Array<FlxPoint>;
+
+	static inline var _maxPredictions:Int = 100;
+	static inline var _predictionTimeSlice:Float = .01;
+
+	public function new(x:Float = 0, y:Float = 0, guide:FlxSprite, predictor:MovementPredictor)
 	{
 		super(x, y);
 
 		_guide = guide;
+		_predictor = predictor;
 
 		loadGraphic(AssetPaths.player__png, true, 8);
 
@@ -75,6 +83,13 @@ class Player extends FlxSprite
 		_forceEndPosition = new FlxPoint();
 		_guideStartPosition = new FlxPoint();
 		_guideEndPosition = new FlxPoint();
+
+		_predictor.initialize(this);
+		_predictedPoints = new Array<FlxPoint>();
+		for (i in 0..._maxPredictions)
+		{
+			_predictedPoints.push(new FlxPoint());
+		}
 	}
 
 	override public function update(elapsed:Float)
@@ -128,6 +143,12 @@ class Player extends FlxSprite
 
 		if (_dragging)
 		{
+			var forceEndX = FlxG.mouse.x;
+			var forceEndY = FlxG.mouse.y;
+			var forceVector = new FlxVector(forceEndX - _forceStartPosition.x, forceEndY - _forceStartPosition.y);
+			forceVector.scale(-3);
+			_predictor.PredictMovement(forceVector, x + width / 2 - FlxG.camera.scroll.x, y + height / 2 - FlxG.camera.scroll.y, _predictionTimeSlice,
+				_maxPredictions, _predictedPoints);
 			if (FlxG.mouse.x < x)
 			{
 				facing = FlxObject.RIGHT;
@@ -183,22 +204,20 @@ class Player extends FlxSprite
 
 	private function updateGuide()
 	{
-		var lineStyle:LineStyle = {
-			thickness: 1,
-			color: FlxColor.WHITE
-		};
 		FlxSpriteUtil.fill(_guide, FlxColor.TRANSPARENT);
-		if (_dragging)
+		if (_dragging && canJump())
 		{
-			FlxSpriteUtil.drawCircle(_guide, _guideStartPosition.x, _guideStartPosition.y, 2, FlxColor.TRANSPARENT, lineStyle);
-			FlxSpriteUtil.drawLine(_guide, _guideStartPosition.x, _guideStartPosition.y, _guideEndPosition.x, _guideEndPosition.y);
-			FlxSpriteUtil.drawCircle(_guide, _guideEndPosition.x, _guideEndPosition.y, 2, FlxColor.TRANSPARENT, lineStyle);
+			var lineStyle:LineStyle = {
+				thickness: 1,
+				color: FlxColor.WHITE
+			};
+			FlxSpriteUtil.drawPolygon(_guide, _predictedPoints, FlxColor.TRANSPARENT, lineStyle);
 		}
 	}
 
 	private function throwPlayer()
 	{
-		if (_canJump || (_canJumpOnAir && _jumpCount < _maxJumpCount))
+		if (canJump())
 		{
 			var forceVector = new FlxVector(_forceEndPosition.x - _forceStartPosition.x, _forceEndPosition.y - _forceStartPosition.y);
 			// forceVector.truncate(30);
@@ -214,6 +233,11 @@ class Player extends FlxSprite
 			_jumpCount++;
 			_canJumpOnAir = true;
 		}
+	}
+
+	private inline function canJump()
+	{
+		return _canJump || (_canJumpOnAir && _jumpCount < _maxJumpCount);
 	}
 }
 
