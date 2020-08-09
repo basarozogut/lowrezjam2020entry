@@ -5,11 +5,9 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
-import flixel.system.FlxAssets;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxSpriteUtil;
-import lime.utils.Preloader;
 
 class Player extends FlxSprite
 {
@@ -125,8 +123,8 @@ class Player extends FlxSprite
 	{
 		if (FlxG.mouse.justPressed)
 		{
-			_forceStartPosition.x = FlxG.mouse.x;
-			_forceStartPosition.y = FlxG.mouse.y;
+			_forceStartPosition.x = FlxG.mouse.screenX;
+			_forceStartPosition.y = FlxG.mouse.screenY;
 			_guideStartPosition.set(FlxG.mouse.screenX, FlxG.mouse.screenY);
 			_dragging = true;
 		}
@@ -135,16 +133,16 @@ class Player extends FlxSprite
 
 		if (_dragging && FlxG.mouse.justReleased)
 		{
-			_forceEndPosition.x = FlxG.mouse.x;
-			_forceEndPosition.y = FlxG.mouse.y;
+			_forceEndPosition.x = FlxG.mouse.screenX;
+			_forceEndPosition.y = FlxG.mouse.screenY;
 			_dragging = false;
 			throwPlayer();
 		}
 
 		if (_dragging)
 		{
-			var forceEndX = FlxG.mouse.x;
-			var forceEndY = FlxG.mouse.y;
+			var forceEndX = FlxG.mouse.screenX;
+			var forceEndY = FlxG.mouse.screenY;
 			var forceVector = new FlxVector(forceEndX - _forceStartPosition.x, forceEndY - _forceStartPosition.y);
 			forceVector.scale(-3);
 			_predictor.PredictMovement(forceVector, x + width / 2 - FlxG.camera.scroll.x, y + height / 2 - FlxG.camera.scroll.y, _predictionTimeSlice,
