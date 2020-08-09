@@ -8,11 +8,16 @@ import flixel.math.FlxVector;
 import flixel.system.FlxAssets;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
+import flixel.util.FlxSpriteUtil;
 
 class Player extends FlxSprite
 {
+	private var _guide:FlxSprite;
+
 	private var _forceStartPosition:FlxPoint;
 	private var _forceEndPosition:FlxPoint;
+	private var _guideStartPosition:FlxPoint;
+	private var _guideEndPosition:FlxPoint;
 	private var _dragging:Bool;
 	private var _canJump:Bool = false;
 	private var _canJumpOnAir:Bool = false;
@@ -23,9 +28,11 @@ class Player extends FlxSprite
 	private var _secondJumpSound:FlxSound = FlxG.sound.load(AssetPaths.second_jump__wav);
 	private var _landSound:FlxSound = FlxG.sound.load(AssetPaths.land__wav);
 
-	public function new(x:Float = 0, y:Float = 0)
+	public function new(x:Float = 0, y:Float = 0, guide:FlxSprite)
 	{
 		super(x, y);
+
+		_guide = guide;
 
 		loadGraphic(AssetPaths.player__png, true, 8);
 
@@ -66,6 +73,8 @@ class Player extends FlxSprite
 
 		_forceStartPosition = new FlxPoint();
 		_forceEndPosition = new FlxPoint();
+		_guideStartPosition = new FlxPoint();
+		_guideEndPosition = new FlxPoint();
 	}
 
 	override public function update(elapsed:Float)
@@ -73,6 +82,7 @@ class Player extends FlxSprite
 		updateFlags();
 		updateInput();
 		updateAnimations();
+		updateGuide();
 
 		super.update(elapsed);
 	}
@@ -102,8 +112,11 @@ class Player extends FlxSprite
 		{
 			_forceStartPosition.x = FlxG.mouse.x;
 			_forceStartPosition.y = FlxG.mouse.y;
+			_guideStartPosition.set(FlxG.mouse.screenX, FlxG.mouse.screenY);
 			_dragging = true;
 		}
+
+		_guideEndPosition.set(FlxG.mouse.screenX, FlxG.mouse.screenY);
 
 		if (_dragging && FlxG.mouse.justReleased)
 		{
@@ -165,6 +178,21 @@ class Player extends FlxSprite
 					animation.play(Animation.IDLE);
 				}
 			}
+		}
+	}
+
+	private function updateGuide()
+	{
+		var lineStyle:LineStyle = {
+			thickness: 1,
+			color: FlxColor.WHITE
+		};
+		FlxSpriteUtil.fill(_guide, FlxColor.TRANSPARENT);
+		if (_dragging)
+		{
+			FlxSpriteUtil.drawCircle(_guide, _guideStartPosition.x, _guideStartPosition.y, 2, FlxColor.TRANSPARENT, lineStyle);
+			FlxSpriteUtil.drawLine(_guide, _guideStartPosition.x, _guideStartPosition.y, _guideEndPosition.x, _guideEndPosition.y);
+			FlxSpriteUtil.drawCircle(_guide, _guideEndPosition.x, _guideEndPosition.y, 2, FlxColor.TRANSPARENT, lineStyle);
 		}
 	}
 
