@@ -40,7 +40,7 @@ class PlayState extends FlxState
 
 		add(_guide);
 
-		FlxG.camera.setScrollBoundsRect(0, 0, cast(_tilemap.width, Int), cast(_tilemap.height, Int), true);
+		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
 		FlxG.camera.follow(_player, PLATFORMER, .3);
 
 		bgColor = 0xff55ed8d;
@@ -81,8 +81,8 @@ class PlayState extends FlxState
 	private function generateBackgroundTiles()
 	{
 		var tileSize = 4;
-		var nTilesHorizontal = cast(_tilemap.width / tileSize, Int);
-		var nTilesVertical = cast(64 / tileSize / 3, Int);
+		var nTilesHorizontal:Int = cast _tilemap.width / tileSize;
+		var nTilesVertical:Int = cast 64 / tileSize / 3;
 		var map = [];
 
 		for (i in 0...nTilesVertical)
