@@ -105,14 +105,20 @@ class Player extends FlxSprite
 			.addKey(RIGHT, PRESSED)
 			.addKey(D, PRESSED);
 
-		_jump = new FlxActionDigital().addGamepad(A, JUST_PRESSED).addKey(Z, JUST_PRESSED);
-		_stopJump = new FlxActionDigital().addGamepad(A, JUST_RELEASED).addKey(Z, JUST_RELEASED);
+		_jump = new FlxActionDigital().addGamepad(DPAD_UP, JUST_PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_UP, JUST_PRESSED)
+			.addKey(UP, JUST_PRESSED)
+			.addKey(W, JUST_PRESSED);
+		_stopJump = new FlxActionDigital().addGamepad(DPAD_UP, JUST_PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_UP, JUST_PRESSED)
+			.addKey(UP, JUST_PRESSED)
+			.addKey(W, JUST_PRESSED);
 
 		_shoot = new FlxActionDigital().addGamepad(X, PRESSED).addKey(X, PRESSED);
 
 		if (actions == null)
 			actions = FlxG.inputs.add(new FlxActionManager());
-		actions.addActions([_up, _down, _left, _right, _jump, _shoot, _stopJump]);
+		actions.addActions([_down, _left, _right, _jump, _shoot, _stopJump]);
 	}
 
 	public function hitTilemap()
@@ -175,8 +181,7 @@ class Player extends FlxSprite
 	{
 		if (canJump())
 		{
-			velocity.y = -acceleration.y * 0.51;
-			_jumpSound.play();
+			velocity.y = -acceleration.y * 0.41;
 
 			if (_jumpCount == 0)
 				_jumpSound.play();
