@@ -11,17 +11,12 @@ import flixel.util.FlxColor;
 class PlayState extends FlxState
 {
 	private var _player:Player;
-	private var _guide:FlxSprite;
 	private var _tilemap:FlxTilemap;
 
 	private var _actors:FlxGroup;
 
 	override public function create()
 	{
-		_guide = new FlxSprite(0, 0);
-		_guide.makeGraphic(64, 64, FlxColor.TRANSPARENT, true);
-		_guide.scrollFactor.set(0, 0);
-
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.background_1__png, false, 64, 64);
 		background.scrollFactor.set(0, 0);
@@ -31,14 +26,11 @@ class PlayState extends FlxState
 		generateBackgroundTiles();
 		add(_tilemap);
 
-		var predictor = new MovementPredictor(0, 0);
-		_player = new Player(16, 16, _guide, predictor);
+		_player = new Player(16, 16);
 		add(_player);
 
 		_actors = new FlxGroup();
 		_actors.add(_player);
-
-		add(_guide);
 
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
 		FlxG.camera.follow(_player, PLATFORMER, .3);

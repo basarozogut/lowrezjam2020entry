@@ -3,6 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.input.actions.FlxAction.FlxActionDigital;
+import flixel.input.actions.FlxActionManager;
 import flixel.math.FlxPoint;
 import flixel.math.FlxVector;
 import flixel.system.FlxSound;
@@ -11,36 +13,31 @@ import flixel.util.FlxSpriteUtil;
 
 class Player extends FlxSprite
 {
-	private var _guide:FlxSprite;
-
-	private var _forceStartPosition:FlxPoint;
-	private var _forceEndPosition:FlxPoint;
-	private var _guideStartPosition:FlxPoint;
-	private var _guideEndPosition:FlxPoint;
-	private var _dragging:Bool;
 	private var _canJump:Bool = false;
 	private var _canJumpOnAir:Bool = false;
 	private var _jumpCount:Int = 0;
 	private var _maxJumpCount:Int = 2;
-
-	private static inline var _throwScale:Float = -3;
+	private var _walkSpeed:Float = 100;
+	private var _maxWalkSpeed:Float = 100;
 
 	private var _jumpSound:FlxSound = FlxG.sound.load(AssetPaths.jump__wav);
 	private var _secondJumpSound:FlxSound = FlxG.sound.load(AssetPaths.second_jump__wav);
 	private var _landSound:FlxSound = FlxG.sound.load(AssetPaths.land__wav);
 
-	private var _predictor:MovementPredictor;
-	private var _predictedPoints:Array<FlxPoint>;
+	// Controls
+	static var actions:FlxActionManager;
 
-	private static inline var _maxPredictions:Int = 100;
-	private static inline var _predictionTimeSlice:Float = .01;
+	var _up:FlxActionDigital;
+	var _down:FlxActionDigital;
+	var _left:FlxActionDigital;
+	var _right:FlxActionDigital;
+	var _shoot:FlxActionDigital;
+	var _jump:FlxActionDigital;
+	var _stopJump:FlxActionDigital;
 
-	public function new(x:Float = 0, y:Float = 0, guide:FlxSprite, predictor:MovementPredictor)
+	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-
-		_guide = guide;
-		_predictor = predictor;
 
 		loadGraphic(AssetPaths.player__png, true, 8);
 
@@ -53,8 +50,13 @@ class Player extends FlxSprite
 		offset.set(1, 1);
 
 		// physics
-		acceleration.y = 240;
-		drag.x = 10;
+		// Walking speed
+		maxVelocity.x = _maxWalkSpeed;
+		// Gravity
+		acceleration.y = 200;
+		// Deceleration (sliding to a stop)
+		// drag.x = maxVelocity.x * 4;
+		drag.x = maxVelocity.x * .25;
 
 		// Animations
 		// idle
@@ -78,17 +80,39 @@ class Player extends FlxSprite
 		animation.add(Animation.FALL, [9], 10);
 		animation.add(Animation.STRETCH, [10, 11], 2);
 
-		_forceStartPosition = new FlxPoint();
-		_forceEndPosition = new FlxPoint();
-		_guideStartPosition = new FlxPoint();
-		_guideEndPosition = new FlxPoint();
+		configureActions();
+	}
 
-		_predictor.initialize(this);
-		_predictedPoints = new Array<FlxPoint>();
-		for (i in 0..._maxPredictions)
-		{
-			_predictedPoints.push(new FlxPoint());
-		}
+	private function configureActions():Void
+	{
+		_up = new FlxActionDigital().addGamepad(DPAD_UP, PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_UP, PRESSED)
+			.addKey(UP, PRESSED)
+			.addKey(W, PRESSED);
+
+		_down = new FlxActionDigital().addGamepad(DPAD_DOWN, PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_DOWN, PRESSED)
+			.addKey(DOWN, PRESSED)
+			.addKey(S, PRESSED);
+
+		_left = new FlxActionDigital().addGamepad(DPAD_LEFT, PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_LEFT, PRESSED)
+			.addKey(LEFT, PRESSED)
+			.addKey(A, PRESSED);
+
+		_right = new FlxActionDigital().addGamepad(DPAD_RIGHT, PRESSED)
+			.addGamepad(LEFT_STICK_DIGITAL_RIGHT, PRESSED)
+			.addKey(RIGHT, PRESSED)
+			.addKey(D, PRESSED);
+
+		_jump = new FlxActionDigital().addGamepad(A, JUST_PRESSED).addKey(Z, JUST_PRESSED);
+		_stopJump = new FlxActionDigital().addGamepad(A, JUST_RELEASED).addKey(Z, JUST_RELEASED);
+
+		_shoot = new FlxActionDigital().addGamepad(X, PRESSED).addKey(X, PRESSED);
+
+		if (actions == null)
+			actions = FlxG.inputs.add(new FlxActionManager());
+		actions.addActions([_up, _down, _left, _right, _jump, _shoot, _stopJump]);
 	}
 
 	public function hitTilemap()
@@ -101,7 +125,6 @@ class Player extends FlxSprite
 		updateFlags();
 		updateInput();
 		updateAnimations();
-		updateGuide();
 
 		super.update(elapsed);
 	}
@@ -122,110 +145,38 @@ class Player extends FlxSprite
 
 	private function updateInput()
 	{
-		if (FlxG.mouse.justPressed)
-		{
-			_forceStartPosition.x = FlxG.mouse.screenX;
-			_forceStartPosition.y = FlxG.mouse.screenY;
-			_guideStartPosition.set(FlxG.mouse.screenX, FlxG.mouse.screenY);
-			_dragging = true;
-		}
+		// Smooth slidey walking controls
+		acceleration.x = 0;
 
-		_guideEndPosition.set(FlxG.mouse.screenX, FlxG.mouse.screenY);
+		if (_left.triggered)
+			moveLeft();
+		else if (_right.triggered)
+			moveRight();
 
-		if (_dragging && FlxG.mouse.justReleased)
-		{
-			_forceEndPosition.x = FlxG.mouse.screenX;
-			_forceEndPosition.y = FlxG.mouse.screenY;
-			_dragging = false;
-			throwPlayer();
-		}
-
-		if (_dragging)
-		{
-			var forceEndX = FlxG.mouse.screenX;
-			var forceEndY = FlxG.mouse.screenY;
-			var forceVector = new FlxVector(forceEndX - _forceStartPosition.x, forceEndY - _forceStartPosition.y);
-			forceVector.scale(_throwScale);
-			_predictor.PredictMovement(forceVector, x + width / 2 - FlxG.camera.scroll.x, y + height / 2 - FlxG.camera.scroll.y, _predictionTimeSlice,
-				_maxPredictions, _predictedPoints);
-			if (FlxG.mouse.x < x)
-			{
-				facing = FlxObject.RIGHT;
-			}
-			else
-			{
-				facing = FlxObject.LEFT;
-			}
-		}
-		else
-		{
-			if (velocity.x > 0)
-			{
-				facing = FlxObject.RIGHT;
-			}
-			else if (velocity.x < 0)
-			{
-				facing = FlxObject.LEFT;
-			}
-			else
-			{
-				facing = FlxG.mouse.x > x ? FlxObject.RIGHT : FlxObject.LEFT;
-			}
-		}
+		if (_jump.triggered)
+			jump();
+		else if (_stopJump.triggered)
+			stopJump();
 	}
 
-	private function updateAnimations()
+	function moveLeft():Void
 	{
-		if (_dragging)
-		{
-			animation.play(Animation.STRETCH);
-		}
-		else
-		{
-			if (velocity.y > 0)
-			{
-				animation.play(Animation.FALL);
-			}
-			else if (velocity.y < 0)
-			{
-				animation.play(Animation.JUMP);
-			}
-			else
-			{
-				if (Math.abs(velocity.x) > 0)
-				{
-					animation.play(Animation.WALK);
-					animation.curAnim.frameRate = Math.abs(velocity.x) * .5;
-				}
-				else
-				{
-					animation.play(Animation.IDLE);
-				}
-			}
-		}
+		facing = FlxObject.LEFT;
+		acceleration.x -= _walkSpeed;
 	}
 
-	private function updateGuide()
+	function moveRight():Void
 	{
-		FlxSpriteUtil.fill(_guide, FlxColor.TRANSPARENT);
-		if (_dragging && canJump())
-		{
-			var lineStyle:LineStyle = {
-				thickness: 1,
-				color: FlxColor.WHITE
-			};
-			FlxSpriteUtil.drawPolygon(_guide, _predictedPoints, FlxColor.TRANSPARENT, lineStyle);
-		}
+		facing = FlxObject.RIGHT;
+		acceleration.x += _walkSpeed;
 	}
 
-	private function throwPlayer()
+	function jump():Void
 	{
 		if (canJump())
 		{
-			var forceVector = new FlxVector(_forceEndPosition.x - _forceStartPosition.x, _forceEndPosition.y - _forceStartPosition.y);
-			forceVector.scale(_throwScale);
-			velocity.x = forceVector.x;
-			velocity.y = forceVector.y;
+			velocity.y = -acceleration.y * 0.51;
+			_jumpSound.play();
 
 			if (_jumpCount == 0)
 				_jumpSound.play();
@@ -234,6 +185,35 @@ class Player extends FlxSprite
 
 			_jumpCount++;
 			_canJumpOnAir = true;
+		}
+	}
+
+	function stopJump()
+	{
+		// TODO
+	}
+
+	private function updateAnimations()
+	{
+		if (velocity.y > 0)
+		{
+			animation.play(Animation.FALL);
+		}
+		else if (velocity.y < 0)
+		{
+			animation.play(Animation.JUMP);
+		}
+		else
+		{
+			if (Math.abs(velocity.x) > 0)
+			{
+				animation.play(Animation.WALK);
+				animation.curAnim.frameRate = Math.abs(velocity.x) * .5;
+			}
+			else
+			{
+				animation.play(Animation.IDLE);
+			}
 		}
 	}
 
