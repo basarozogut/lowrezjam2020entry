@@ -12,6 +12,7 @@ class PlayState extends FlxState
 {
 	private var _player:Player;
 	private var _tilemap:FlxTilemap;
+	private var _camTarget:FlxObject;
 
 	private var _actors:FlxGroup;
 
@@ -32,8 +33,12 @@ class PlayState extends FlxState
 		_actors = new FlxGroup();
 		_actors.add(_player);
 
+		_camTarget = new FlxObject(32, 0);
+		add(_camTarget);
+		_camTarget.acceleration.x = 2;
+
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
-		FlxG.camera.follow(_player, PLATFORMER, .3);
+		FlxG.camera.follow(_camTarget, LOCKON, .3);
 
 		bgColor = 0xff55ed8d;
 
