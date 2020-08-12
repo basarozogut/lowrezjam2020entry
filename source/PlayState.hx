@@ -38,7 +38,7 @@ class PlayState extends FlxState
 		{
 			_whitePixel = new FlxParticle();
 			_whitePixel.scrollFactor.set(0, 0);
-			_whitePixel.makeGraphic(1, 1, 0xFFFFFFFF);
+			_whitePixel.makeGraphic(1, 1, 0xAAFFFFFF);
 			_whitePixel.visible = false; // Make sure the particle doesn't show up at (0, 0)
 			_emitter.add(_whitePixel);
 		}
@@ -92,6 +92,12 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.SPACE)
 		{
 			FlxG.resetGame();
+		}
+
+		var tolerance = 4;
+		if ((_player.y > _tilemap.y + _tilemap.height) || (_player.x < FlxG.camera.scroll.x - _player.width - tolerance))
+		{
+			gameOver();
 		}
 
 		super.update(elapsed);
@@ -170,5 +176,11 @@ class PlayState extends FlxState
 		bgTilemap.scrollFactor.set(0.2, 0.2);
 		bgTilemap.y = _tilemap.y + _tilemap.height - bgTilemap.height;
 		add(bgTilemap);
+	}
+
+	private function gameOver():Void
+	{
+		// TODO game over screen
+		FlxG.resetGame();
 	}
 }
