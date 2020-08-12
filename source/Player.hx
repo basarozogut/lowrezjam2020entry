@@ -144,7 +144,7 @@ class Player extends FlxSprite
 		if (isTouching(FlxObject.FLOOR))
 		{
 			_canJump = true;
-			_canJumpOnAir = false;
+			_canJumpOnAir = true;
 			_jumpCount = 0;
 		}
 		else
