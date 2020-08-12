@@ -54,6 +54,11 @@ class PlayState extends FlxState
 
 		add(_scoreText);
 
+		if (FlxG.sound.music == null) // don't restart the music if it's already playing
+		{
+			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, 1, true);
+		}
+
 		super.create();
 	}
 
