@@ -5,6 +5,8 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
+import flixel.effects.particles.FlxEmitter;
+import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
@@ -20,8 +22,28 @@ class PlayState extends FlxState
 
 	private var _scoreText:FlxText;
 
+	private var _emitter:FlxEmitter;
+	private var _whitePixel:FlxParticle;
+
 	override public function create()
 	{
+		// Particles
+		var nParticles = 200;
+		_emitter = new FlxEmitter(0, 0, nParticles);
+		_emitter.velocity.set(-200, -10, -100, 10);
+		_emitter.width = FlxG.width;
+		_emitter.height = FlxG.height;
+
+		for (i in 0...nParticles)
+		{
+			_whitePixel = new FlxParticle();
+			_whitePixel.scrollFactor.set(0, 0);
+			_whitePixel.makeGraphic(1, 1, 0xFFFFFFFF);
+			_whitePixel.visible = false; // Make sure the particle doesn't show up at (0, 0)
+			_emitter.add(_whitePixel);
+		}
+
+		// Gameplay
 		_player = new Player(0, 0);
 		_scoreText = new FlxText(0, 0, 0, "SCORE", 8);
 		_scoreText.setFormat("assets/fonts/8_bit_wonder.ttf", 6);
@@ -52,7 +74,10 @@ class PlayState extends FlxState
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
 		FlxG.camera.follow(_camTarget, LOCKON, .3);
 
+		add(_emitter);
 		add(_scoreText);
+
+		_emitter.start(false, .02);
 
 		if (FlxG.sound.music == null) // don't restart the music if it's already playing
 		{
