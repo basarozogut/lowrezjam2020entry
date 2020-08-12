@@ -4,9 +4,10 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.group.FlxGroup;
+import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -15,9 +16,20 @@ class PlayState extends FlxState
 	private var _camTarget:FlxObject;
 
 	private var _actors:FlxGroup;
+	private var _collectibles:FlxGroup;
+
+	private var _scoreText:FlxText;
 
 	override public function create()
 	{
+		_player = new Player(0, 0);
+		_scoreText = new FlxText(0, 0, 0, "SCORE", 8);
+		_scoreText.setFormat("assets/fonts/8_bit_wonder.ttf", 6);
+		_scoreText.scrollFactor.set(0, 0);
+		_player.score.scoreText = _scoreText;
+		_actors = new FlxGroup();
+		_collectibles = new FlxGroup();
+
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.background_1__png, false, 64, 64);
 		background.scrollFactor.set(0, 0);
@@ -25,22 +37,22 @@ class PlayState extends FlxState
 
 		loadLevel();
 		generateBackgroundTiles();
+
 		add(_tilemap);
+		add(_collectibles);
+		add(_actors);
 
-		_player = new Player(16, 16);
-		add(_player);
-
-		_actors = new FlxGroup();
 		_actors.add(_player);
 
-		_camTarget = new FlxObject(32, 0);
+		_camTarget = new FlxObject(0, 0);
 		add(_camTarget);
-		_camTarget.acceleration.x = 2;
+		// _camTarget.acceleration.x = 2;
+		_camTarget.velocity.x = 20;
 
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
 		FlxG.camera.follow(_camTarget, LOCKON, .3);
 
-		bgColor = 0xff55ed8d;
+		add(_scoreText);
 
 		super.create();
 	}
@@ -55,6 +67,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(_tilemap, _actors, tilemapCollidedActor);
+		FlxG.overlap(_player, _collectibles, overlapped);
 	}
 
 	private function tilemapCollidedActor(a:FlxObject, b:FlxObject)
@@ -69,10 +82,39 @@ class PlayState extends FlxState
 		}
 	}
 
+	function overlapped(spriteA:FlxObject, spriteB:FlxObject):Void
+	{
+		if ((spriteA is Player) || (spriteB is Coin))
+		{
+			var coin:Coin = cast spriteB;
+			coin.pickedUp();
+
+			var player:Player = cast spriteA;
+			player.score.addCollectible(coin);
+		}
+	}
+
 	private function loadLevel()
 	{
+		var loader = new FlxOgmo3Loader(AssetPaths.lowrezjam2020__ogmo, AssetPaths.level_1__json);
+
 		_tilemap = new FlxTilemap();
-		_tilemap.loadMapFromGraphic(AssetPaths.level_2__png, true, 1, null, AssetPaths.tileset__png, 8, 8);
+		_tilemap = loader.loadTilemap(AssetPaths.tileset__png, "walls");
+
+		loader.loadEntities(placeEntities, "entities");
+	}
+
+	function placeEntities(entity:EntityData)
+	{
+		if (entity.name == "player")
+		{
+			_player.setPosition(entity.x, entity.y);
+		}
+		else if (entity.name == "coin")
+		{
+			var coin = new Coin(entity.x, entity.y);
+			_collectibles.add(coin);
+		}
 	}
 
 	private function generateBackgroundTiles()
