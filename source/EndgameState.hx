@@ -16,7 +16,7 @@ class EndgameState extends FlxState
 	var _text:Array<String> = [
 		"\n\n\nGAME\nCOMPLETED!",
 		"\n\n\nFINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(),
-		"\n\nGFX - SFX\nMUSIC - CODING\n\nCHILLWAVES",
+		"\n\nGFX SFX\nMUSIC\nCODING\n\nCHILLWAVES",
 		"\n8 BIT WONDER\nFONT by\n\nJoiro Hatagaya",
 		"\n\n\nTHANKS FOR\nPLAYING",
 		"\n\n\nPRESS ANY KEY\nTO EXIT"
@@ -36,6 +36,8 @@ class EndgameState extends FlxState
 		_levelCompleteText.y = 0;
 		_levelCompleteText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_levelCompleteText);
+
+		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_credits__ogg, .5, true);
 
 		nextText();
 	}
