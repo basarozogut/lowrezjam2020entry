@@ -5,12 +5,14 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
+import flixel.effects.FlxFlicker;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
 {
@@ -99,6 +101,8 @@ class PlayState extends FlxState
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
 		FlxG.mouse.visible = false;
+
+		FlxG.camera.fade(FlxColor.BLACK, .5, true);
 
 		super.create();
 	}
@@ -286,8 +290,18 @@ class PlayState extends FlxState
 
 	private function gameOver():Void
 	{
-		// TODO game over screen
-		resetGame();
+		if (!_player.alive)
+			return;
+
+		_player.kill();
+		var timer = new FlxTimer(FlxTimer.globalManager);
+		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_dead__ogg, .5, false);
+
+		timer.start(2, timer -> FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
+		{
+			LevelManager.instance.getScore().reset();
+			FlxG.switchState(new PlayState());
+		}));
 	}
 
 	private function nextLevel():Void

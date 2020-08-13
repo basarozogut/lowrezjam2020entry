@@ -45,4 +45,10 @@ class Score
 	{
 		scoreText.text = StringTools.lpad(Std.string(_amount), "0", 4);
 	}
+
+	public function reset()
+	{
+		_amount = 0;
+		updateScore();
+	}
 }
