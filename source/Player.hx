@@ -13,8 +13,6 @@ import flixel.util.FlxSpriteUtil;
 
 class Player extends FlxSprite
 {
-	public var score:Score;
-
 	private var _canJump:Bool = false;
 	private var _canJumpOnAir:Bool = false;
 	private var _jumpCount:Int = 0;
@@ -40,8 +38,6 @@ class Player extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0)
 	{
 		super(x, y);
-
-		score = new Score();
 
 		loadGraphic(AssetPaths.player__png, true, 8);
 

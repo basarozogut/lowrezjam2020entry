@@ -54,7 +54,7 @@ class PlayState extends FlxState
 		_scoreText = new FlxText(0, 0, 0, "");
 		_scoreText.setFormat("assets/fonts/8_bit_wonder/8_bit_wonder.ttf", 6, FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW, 0x33000000);
 		_scoreText.scrollFactor.set(0, 0);
-		_player.score.scoreText = _scoreText;
+		LevelManager.instance.getScore().scoreText = _scoreText;
 		_actors = new FlxGroup();
 		_collectibles = new FlxGroup();
 		_markers = new FlxGroup();
@@ -178,8 +178,7 @@ class PlayState extends FlxState
 			var coin:Coin = cast b;
 			coin.pickedUp();
 
-			var player:Player = cast a;
-			player.score.addCollectible(coin);
+			LevelManager.instance.getScore().addCollectible(coin);
 		}
 		else if ((a is Anomaly) && (b is Marker))
 		{

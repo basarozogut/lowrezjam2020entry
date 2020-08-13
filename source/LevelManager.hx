@@ -6,10 +6,12 @@ class LevelManager
 
 	private var _levelList:Array<String>;
 	private var _currentLevelIndex = -1;
+	private var _score:Score;
 
 	public function new()
 	{
 		_levelList = new Array<String>();
+		resetState();
 	}
 
 	public function addLevel(level:String)
@@ -35,5 +37,11 @@ class LevelManager
 	public function resetState():Void
 	{
 		_currentLevelIndex = 0;
+		_score = new Score();
+	}
+
+	public function getScore()
+	{
+		return _score;
 	}
 }
