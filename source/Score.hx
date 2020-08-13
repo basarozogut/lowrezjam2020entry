@@ -41,7 +41,7 @@ class Score
 		updateScore();
 	}
 
-	private function updateScore():Void
+	public function updateScore():Void
 	{
 		scoreText.text = StringTools.lpad(Std.string(_amount), "0", 4);
 	}

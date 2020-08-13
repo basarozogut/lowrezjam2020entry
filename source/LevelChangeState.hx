@@ -33,6 +33,11 @@ class LevelChangeState extends FlxState
 		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height;
 
+		var scoreText = new FlxText(0, 16, FlxG.width);
+		scoreText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
+		LevelManager.instance.getScore().scoreText = scoreText;
+		LevelManager.instance.getScore().updateScore();
+
 		var player = new Player(0, 0);
 		player.allowControls = false;
 		player.x = FlxG.width / 2 - player.width / 2;
@@ -50,6 +55,7 @@ class LevelChangeState extends FlxState
 
 		add(levelCompleteText);
 		add(_pressAnyKeyText);
+		add(scoreText);
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_level_change__ogg, .5, false);
 	}
