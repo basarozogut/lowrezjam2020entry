@@ -14,7 +14,6 @@ class Main extends Sprite
 		LevelManager.instance.addLevel(AssetPaths.level_3__json);
 		LevelManager.instance.resetState();
 
-		addChild(new FlxGame(64, 64, PlayState));
-		// addChild(new FlxGame(64, 64, MenuState));
+		addChild(new FlxGame(64, 64, MenuState));
 	}
 }
