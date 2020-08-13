@@ -71,6 +71,10 @@ class MenuState extends FlxState
 
 		bgColor = 0xff55ed8d;
 
+		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_intro__ogg, .4, true);
+
+		FlxG.mouse.visible = false;
+
 		super.create();
 	}
 

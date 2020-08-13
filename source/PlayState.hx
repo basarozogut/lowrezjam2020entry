@@ -100,7 +100,6 @@ class PlayState extends FlxState
 		_emitter.start(false, .02);
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
-		FlxG.mouse.visible = false;
 
 		FlxG.camera.fade(FlxColor.BLACK, .5, true);
 
