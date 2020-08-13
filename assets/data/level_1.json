@@ -4,6 +4,7 @@
   "height": 128,
   "offsetX": 0,
   "offsetY": 0,
+  "values": {"auto_scroll": false},
   "layers": [
     {
       "name": "entities",

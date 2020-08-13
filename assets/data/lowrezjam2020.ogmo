@@ -10,7 +10,9 @@
   "levelDefaultSize": {"x": 320, "y": 240},
   "levelMinSize": {"x": 128, "y": 64},
   "levelMaxSize": {"x": 1024, "y": 128},
-  "levelValues": [],
+  "levelValues": [
+    {"name": "auto_scroll", "definition": "Boolean", "defaults": false}
+  ],
   "defaultExportMode": ".json",
   "compactExport": false,
   "externalScript": "",

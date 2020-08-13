@@ -31,6 +31,8 @@ class PlayState extends FlxState
 	private var _emitter:FlxEmitter;
 	private var _whitePixel:FlxParticle;
 
+	private var _autoScroll:Bool = false;
+
 	override public function create()
 	{
 		// Particles
@@ -81,7 +83,14 @@ class PlayState extends FlxState
 		_camTarget.velocity.x = 20;
 
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
-		FlxG.camera.follow(_camTarget, PLATFORMER, .3);
+		if (_autoScroll)
+		{
+			FlxG.camera.follow(_camTarget, PLATFORMER, .3);
+		}
+		else
+		{
+			FlxG.camera.follow(_player, PLATFORMER, .3);
+		}
 
 		add(_emitter);
 		add(_scoreText);
@@ -119,8 +128,16 @@ class PlayState extends FlxState
 			nextLevel();
 		}
 
-		var tolerance = 4;
-		if ((_player.y > _tilemap.y + _tilemap.height) || (_player.x < FlxG.camera.scroll.x - _player.width - tolerance))
+		if (_autoScroll)
+		{
+			var tolerance = 4;
+			if ((_player.x < FlxG.camera.scroll.x - _player.width - tolerance))
+			{
+				gameOver();
+			}
+		}
+
+		if ((_player.y > _tilemap.y + _tilemap.height))
 		{
 			gameOver();
 		}
@@ -212,6 +229,8 @@ class PlayState extends FlxState
 	{
 		var level = LevelManager.instance.getCurrentLevel();
 		var loader = new FlxOgmo3Loader(AssetPaths.lowrezjam2020__ogmo, level);
+
+		_autoScroll = loader.getLevelValue("auto_scroll");
 
 		_tilemap = new FlxTilemap();
 		_tilemap = loader.loadTilemap(AssetPaths.tileset__png, "walls");
