@@ -272,6 +272,11 @@ class PlayState extends FlxState
 		if (!_player.alive)
 			return;
 
+		var deadPlayer:PlayerDead = new PlayerDead(_player.x, _player.y);
+		deadPlayer.acceleration.y = _player.acceleration.y;
+		deadPlayer.velocity.y = -deadPlayer.acceleration.y * 0.5;
+		deadPlayer.velocity.x = FlxG.random.float(-100, 100);
+		add(deadPlayer);
 		_player.kill();
 		var timer = new FlxTimer(FlxTimer.globalManager);
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_dead__ogg, .5, false);
