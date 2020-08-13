@@ -10,15 +10,15 @@ class Anomaly extends FlxSprite
 
 	public function new(x:Float = 0, y:Float = 0, vertical:Bool, initialDirection:Int)
 	{
-		super(x + 1, y + 1);
+		super(x + 2, y + 2);
 
 		_vertical = vertical;
 
 		loadGraphic(AssetPaths.anomaly__png, true, 8);
 
-		width = 6;
-		height = 6;
-		offset.set(1, 1);
+		width = 4;
+		height = 4;
+		offset.set(2, 2);
 
 		animation.add("idle", [0, 1, 2, 3, 4], 10);
 		animation.play("idle");

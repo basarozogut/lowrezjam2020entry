@@ -1,0 +1,159 @@
+{
+  "ogmoVersion": "3.3.0",
+  "width": 184,
+  "height": 72,
+  "offsetX": 0,
+  "offsetY": 0,
+  "values": {"auto_scroll": false},
+  "layers": [
+    {
+      "name": "entities",
+      "_eid": "26479297",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 23,
+      "gridCellsY": 9,
+      "entities": [
+        {"name": "player", "id": 0, "_eid": "26473891", "x": 0, "y": 56, "originX": 0, "originY": 0},
+        {
+          "name": "anomaly",
+          "id": 1,
+          "_eid": "30850794",
+          "x": 16,
+          "y": 56,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": -1}
+        },
+        {
+          "name": "anomaly",
+          "id": 2,
+          "_eid": "30850794",
+          "x": 24,
+          "y": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": -1}
+        },
+        {
+          "name": "anomaly",
+          "id": 4,
+          "_eid": "30850794",
+          "x": 48,
+          "y": 56,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": -1}
+        },
+        {
+          "name": "anomaly",
+          "id": 5,
+          "_eid": "30850794",
+          "x": 56,
+          "y": 48,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": -1}
+        },
+        {
+          "name": "anomaly",
+          "id": 7,
+          "_eid": "30850794",
+          "x": 16,
+          "y": 8,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": 1}
+        },
+        {
+          "name": "anomaly",
+          "id": 8,
+          "_eid": "30850794",
+          "x": 24,
+          "y": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": 1}
+        },
+        {
+          "name": "anomaly",
+          "id": 10,
+          "_eid": "30850794",
+          "x": 48,
+          "y": 8,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": 1}
+        },
+        {
+          "name": "anomaly",
+          "id": 11,
+          "_eid": "30850794",
+          "x": 56,
+          "y": 16,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": true, "initial_direction": 1}
+        },
+        {"name": "hazard_bounce_marker", "id": 13, "_eid": "31169632", "x": 16, "y": 32, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 14, "_eid": "31169632", "x": 24, "y": 32, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 16, "_eid": "31169632", "x": 48, "y": 32, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 17, "_eid": "31169632", "x": 56, "y": 32, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 19, "_eid": "31169632", "x": 16, "y": 0, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 20, "_eid": "31169632", "x": 24, "y": 0, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 22, "_eid": "31169632", "x": 48, "y": 0, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 23, "_eid": "31169632", "x": 56, "y": 0, "originX": 0, "originY": 0},
+        {
+          "name": "anomaly",
+          "id": 24,
+          "_eid": "30850794",
+          "x": 128,
+          "y": 40,
+          "originX": 0,
+          "originY": 0,
+          "values": {"vertical": false, "initial_direction": -1}
+        },
+        {"name": "hazard_bounce_marker", "id": 25, "_eid": "31169632", "x": 80, "y": 40, "originX": 0, "originY": 0},
+        {"name": "hazard_bounce_marker", "id": 26, "_eid": "31169632", "x": 176, "y": 40, "originX": 0, "originY": 0}
+      ]
+    },
+    {
+      "name": "collectibles",
+      "_eid": "32723121",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 23,
+      "gridCellsY": 9,
+      "entities": [
+        {"name": "coin", "id": 0, "_eid": "26570596", "x": 16, "y": 32, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 1, "_eid": "26570596", "x": 24, "y": 32, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 2, "_eid": "26570596", "x": 48, "y": 32, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 3, "_eid": "26570596", "x": 56, "y": 32, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 4, "_eid": "26570596", "x": 144, "y": 8, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 5, "_eid": "26570596", "x": 152, "y": 8, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 6, "_eid": "26570596", "x": 168, "y": 8, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 7, "_eid": "26570596", "x": 160, "y": 8, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 8, "_eid": "26570596", "x": 136, "y": 8, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 9, "_eid": "26570596", "x": 136, "y": 16, "originX": 0, "originY": 0}
+      ]
+    },
+    {
+      "name": "walls",
+      "_eid": "26473805",
+      "offsetX": 0,
+      "offsetY": 0,
+      "gridCellWidth": 8,
+      "gridCellHeight": 8,
+      "gridCellsX": 23,
+      "gridCellsY": 9,
+      "tileset": "tiles",
+      "data": [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      "exportMode": 0,
+      "arrayMode": 0
+    }
+  ]
+}
