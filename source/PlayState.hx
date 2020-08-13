@@ -88,10 +88,10 @@ class PlayState extends FlxState
 
 		_emitter.start(false, .02);
 
-		// if (FlxG.sound.music == null) // don't restart the music if it's already playing
-		// {
-		// 	FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
-		// }
+		if (FlxG.sound.music == null) // don't restart the music if it's already playing
+		{
+			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
+		}
 
 		FlxG.mouse.visible = false;
 
@@ -103,11 +103,21 @@ class PlayState extends FlxState
 		#if debug
 		if (FlxG.keys.justPressed.SPACE)
 		{
-			FlxG.resetGame();
+			resetGame();
+		}
+
+		if (FlxG.keys.justPressed.N)
+		{
+			nextLevel();
 		}
 		#end
 
 		_camTarget.y = _player.y;
+
+		if (_player.x > _tilemap.width)
+		{
+			nextLevel();
+		}
 
 		var tolerance = 4;
 		if ((_player.y > _tilemap.y + _tilemap.height) || (_player.x < FlxG.camera.scroll.x - _player.width - tolerance))
@@ -201,7 +211,8 @@ class PlayState extends FlxState
 
 	private function loadLevel()
 	{
-		var loader = new FlxOgmo3Loader(AssetPaths.lowrezjam2020__ogmo, AssetPaths.level_1__json);
+		var level = LevelManager.instance.getCurrentLevel();
+		var loader = new FlxOgmo3Loader(AssetPaths.lowrezjam2020__ogmo, level);
 
 		_tilemap = new FlxTilemap();
 		_tilemap = loader.loadTilemap(AssetPaths.tileset__png, "walls");
@@ -261,6 +272,25 @@ class PlayState extends FlxState
 	private function gameOver():Void
 	{
 		// TODO game over screen
+		resetGame();
+	}
+
+	private function nextLevel():Void
+	{
+		LevelManager.instance.nextLevel();
+		if (LevelManager.instance.getCurrentLevel() != null)
+		{
+			FlxG.switchState(new PlayState());
+		}
+		else
+		{
+			FlxG.switchState(new EndgameState());
+		}
+	}
+
+	private function resetGame()
+	{
+		LevelManager.instance.resetState();
 		FlxG.resetGame();
 	}
 }
