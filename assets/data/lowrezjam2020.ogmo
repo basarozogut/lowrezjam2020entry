@@ -26,6 +26,14 @@
       "excludedTags": []
     },
     {
+      "definition": "entity",
+      "name": "collectibles",
+      "gridSize": {"x": 8, "y": 8},
+      "exportID": "32723121",
+      "requiredTags": [],
+      "excludedTags": []
+    },
+    {
       "definition": "tile",
       "name": "walls",
       "gridSize": {"x": 8, "y": 8},

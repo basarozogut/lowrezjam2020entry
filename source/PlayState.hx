@@ -217,6 +217,7 @@ class PlayState extends FlxState
 		_tilemap = loader.loadTilemap(AssetPaths.tileset__png, "walls");
 
 		loader.loadEntities(placeEntities, "entities");
+		loader.loadEntities(placeEntities, "collectibles");
 	}
 
 	function placeEntities(entity:EntityData)
