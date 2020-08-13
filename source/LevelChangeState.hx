@@ -12,6 +12,8 @@ class LevelChangeState extends FlxState
 	var _textBlinkTimerMax:Float;
 	var _textBlinkTimer:Float;
 
+	var _allowKeyPressTimer:Float;
+
 	var _pressAnyKeyText:FlxText;
 
 	override public function create()
@@ -20,6 +22,8 @@ class LevelChangeState extends FlxState
 
 		_textBlinkTimerMax = 1;
 		_textBlinkTimer = _textBlinkTimerMax;
+
+		_allowKeyPressTimer = 2;
 
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.background_1__png, false, 64, 64);
@@ -34,6 +38,7 @@ class LevelChangeState extends FlxState
 		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
 			0x33000000);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height;
+		_pressAnyKeyText.visible = false;
 
 		var scoreText = new FlxText(0, 16, FlxG.width);
 		scoreText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
@@ -65,16 +70,23 @@ class LevelChangeState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ANY)
+		if (FlxG.keys.justPressed.ANY && _allowKeyPressTimer <= 0)
 		{
 			nextLevel();
 		}
 
-		_textBlinkTimer -= elapsed;
-		if (_textBlinkTimer <= 0)
+		if (_allowKeyPressTimer > 0)
 		{
-			blinkText();
-			_textBlinkTimer += _textBlinkTimerMax;
+			_allowKeyPressTimer -= elapsed;
+		}
+		else
+		{
+			_textBlinkTimer -= elapsed;
+			if (_textBlinkTimer <= 0)
+			{
+				blinkText();
+				_textBlinkTimer += _textBlinkTimerMax;
+			}
 		}
 
 		super.update(elapsed);

@@ -13,6 +13,7 @@ import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import openfl.utils.AssetManifest;
 
 class PlayState extends FlxState
 {
@@ -114,11 +115,21 @@ class PlayState extends FlxState
 			resetGame();
 		}
 
+		if (FlxG.keys.justPressed.R)
+		{
+			gameOver();
+		}
+
 		if (FlxG.keys.justPressed.N)
 		{
 			nextLevel();
 		}
 		#end
+
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			mainTitle();
+		}
 
 		_camTarget.y = _player.y;
 
@@ -298,5 +309,11 @@ class PlayState extends FlxState
 	{
 		LevelManager.instance.resetState();
 		FlxG.resetGame();
+	}
+
+	private function mainTitle()
+	{
+		LevelManager.instance.resetState();
+		FlxG.switchState(new MenuState());
 	}
 }

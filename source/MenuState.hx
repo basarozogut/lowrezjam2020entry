@@ -80,7 +80,11 @@ class MenuState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ANY)
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			Sys.exit(0);
+		}
+		else if (FlxG.keys.justPressed.ANY)
 		{
 			FlxG.switchState(new PlayState());
 		}

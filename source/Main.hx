@@ -9,9 +9,9 @@ class Main extends Sprite
 	{
 		super();
 
-		LevelManager.instance.addLevel(AssetPaths.level_1__json);
-		LevelManager.instance.addLevel(AssetPaths.level_2__json);
-		LevelManager.instance.addLevel(AssetPaths.level_3__json);
+		LevelManager.instance.addLevel(AssetPaths.level_start__json);
+		LevelManager.instance.addLevel(AssetPaths.level_chase__json);
+		LevelManager.instance.addLevel(AssetPaths.level_the_tower__json);
 		LevelManager.instance.resetState();
 
 		addChild(new FlxGame(64, 64, MenuState));
