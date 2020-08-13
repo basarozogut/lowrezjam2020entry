@@ -1,9 +1,6 @@
 package;
 
-import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.system.FlxSound;
-import flixel.tile.FlxTilemap;
 
 class Anomaly extends FlxSprite
 {
@@ -18,6 +15,10 @@ class Anomaly extends FlxSprite
 		_vertical = vertical;
 
 		loadGraphic(AssetPaths.anomaly__png, true, 8);
+
+		width = 6;
+		height = 6;
+		offset.set(1, 1);
 
 		animation.add("idle", [0, 1, 2, 3, 4], 10);
 		animation.play("idle");
