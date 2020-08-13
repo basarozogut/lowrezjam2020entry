@@ -56,10 +56,19 @@ class EndgameState extends FlxState
 		_levelCompleteText.text = text;
 
 		_currentTextIndex = (_currentTextIndex + 1) % _text.length;
-		FlxTween.tween(_levelCompleteText, {x: 0}, 2, {
+		FlxTween.tween(_levelCompleteText, {x: 0}, 1, {
 			type: FlxTweenType.ONESHOT,
 			ease: FlxEase.cubeInOut,
-			onComplete: tween -> _waitTimer.start(2, (timer) -> nextText())
+			onComplete: tween -> _waitTimer.start(2, (timer) -> hideText())
+		});
+	}
+
+	private function hideText()
+	{
+		FlxTween.tween(_levelCompleteText, {x: FlxG.width}, 1, {
+			type: FlxTweenType.ONESHOT,
+			ease: FlxEase.cubeInOut,
+			onComplete: tween -> nextText()
 		});
 	}
 
