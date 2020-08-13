@@ -18,8 +18,13 @@ class PlayState extends FlxState
 	private var _tilemap:FlxTilemap;
 	private var _camTarget:FlxObject;
 
+	// Physical groups
 	private var _actors:FlxGroup;
 	private var _collectibles:FlxGroup;
+	private var _markers:FlxGroup;
+
+	// Logical groups
+	private var _enemies:FlxGroup;
 
 	private var _scoreText:FlxText;
 
@@ -52,6 +57,8 @@ class PlayState extends FlxState
 		_player.score.scoreText = _scoreText;
 		_actors = new FlxGroup();
 		_collectibles = new FlxGroup();
+		_markers = new FlxGroup();
+		_enemies = new FlxGroup();
 
 		var background = new FlxSprite();
 		background.loadGraphic(AssetPaths.background_1__png, false, 64, 64);
@@ -63,6 +70,7 @@ class PlayState extends FlxState
 
 		add(_tilemap);
 		add(_collectibles);
+		add(_markers);
 		add(_actors);
 
 		_actors.add(_player);
@@ -73,17 +81,17 @@ class PlayState extends FlxState
 		_camTarget.velocity.x = 20;
 
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
-		FlxG.camera.follow(_camTarget, LOCKON, .3);
+		FlxG.camera.follow(_camTarget, PLATFORMER, .3);
 
 		add(_emitter);
 		add(_scoreText);
 
 		_emitter.start(false, .02);
 
-		if (FlxG.sound.music == null) // don't restart the music if it's already playing
-		{
-			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
-		}
+		// if (FlxG.sound.music == null) // don't restart the music if it's already playing
+		// {
+		// 	FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
+		// }
 
 		FlxG.mouse.visible = false;
 
@@ -99,6 +107,8 @@ class PlayState extends FlxState
 		}
 		#end
 
+		_camTarget.y = _player.y;
+
 		var tolerance = 4;
 		if ((_player.y > _tilemap.y + _tilemap.height) || (_player.x < FlxG.camera.scroll.x - _player.width - tolerance))
 		{
@@ -108,7 +118,9 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(_tilemap, _actors, tilemapCollidedActor);
-		FlxG.overlap(_player, _collectibles, overlapped);
+		FlxG.overlap(_actors, _collectibles, overlapped);
+		FlxG.overlap(_actors, _enemies, overlapped);
+		FlxG.overlap(_actors, _markers, overlapped);
 	}
 
 	private function tilemapCollidedActor(a:FlxObject, b:FlxObject)
@@ -121,17 +133,45 @@ class PlayState extends FlxState
 				player.hitTilemap();
 			}
 		}
+		else if ((b is Anomaly))
+		{
+			var anomaly:Anomaly = cast b;
+			if (b.justTouched(FlxObject.RIGHT))
+			{
+				anomaly.flipDirection(-1);
+			}
+			else if (b.justTouched(FlxObject.LEFT))
+			{
+				anomaly.flipDirection(1);
+			}
+		}
 	}
 
-	function overlapped(spriteA:FlxObject, spriteB:FlxObject):Void
+	function overlapped(a:FlxObject, b:FlxObject):Void
 	{
-		if ((spriteA is Player) || (spriteB is Coin))
+		if ((a is Player) && (b is Coin))
 		{
-			var coin:Coin = cast spriteB;
+			var coin:Coin = cast b;
 			coin.pickedUp();
 
-			var player:Player = cast spriteA;
+			var player:Player = cast a;
 			player.score.addCollectible(coin);
+		}
+		else if ((a is Anomaly) && (b is Marker))
+		{
+			var anomaly:Anomaly = cast a;
+			var marker:Marker = cast b;
+			if (marker.getMarkerType() == HAZARD_BOUNCE)
+			{
+				if (marker.x < anomaly.x)
+					anomaly.flipDirection(1);
+				else
+					anomaly.flipDirection(-1);
+			}
+		}
+		else if ((a is Player) && (b is Anomaly))
+		{
+			gameOver();
 		}
 	}
 
@@ -155,6 +195,17 @@ class PlayState extends FlxState
 		{
 			var coin = new Coin(entity.x, entity.y);
 			_collectibles.add(coin);
+		}
+		else if (entity.name == "anomaly")
+		{
+			var anomaly = new Anomaly(entity.x, entity.y);
+			_actors.add(anomaly);
+			_enemies.add(anomaly);
+		}
+		else if (entity.name == "hazard_bounce_marker")
+		{
+			var marker = new Marker(entity.x, entity.y, HAZARD_BOUNCE);
+			_markers.add(marker);
 		}
 	}
 
