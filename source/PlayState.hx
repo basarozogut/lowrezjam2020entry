@@ -10,6 +10,7 @@ import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
+import flixel.util.FlxColor;
 
 class PlayState extends FlxState
 {
@@ -45,8 +46,8 @@ class PlayState extends FlxState
 
 		// Gameplay
 		_player = new Player(0, 0);
-		_scoreText = new FlxText(0, 0, 0, "SCORE", 8);
-		_scoreText.setFormat("assets/fonts/8_bit_wonder.ttf", 6);
+		_scoreText = new FlxText(0, 0, 0, "");
+		_scoreText.setFormat("assets/fonts/8_bit_wonder/8_bit_wonder.ttf", 6, FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW, 0x33000000);
 		_scoreText.scrollFactor.set(0, 0);
 		_player.score.scoreText = _scoreText;
 		_actors = new FlxGroup();
@@ -81,18 +82,22 @@ class PlayState extends FlxState
 
 		if (FlxG.sound.music == null) // don't restart the music if it's already playing
 		{
-			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, 1, true);
+			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
 		}
+
+		FlxG.mouse.visible = false;
 
 		super.create();
 	}
 
 	override public function update(elapsed:Float)
 	{
+		#if debug
 		if (FlxG.keys.justPressed.SPACE)
 		{
 			FlxG.resetGame();
 		}
+		#end
 
 		var tolerance = 4;
 		if ((_player.y > _tilemap.y + _tilemap.height) || (_player.x < FlxG.camera.scroll.x - _player.width - tolerance))

@@ -43,6 +43,6 @@ class Score
 
 	private function updateScore():Void
 	{
-		scoreText.text = "Score: " + StringTools.lpad(Std.string(_amount), "0", 4);
+		scoreText.text = StringTools.lpad(Std.string(_amount), "0", 4);
 	}
 }
