@@ -142,7 +142,10 @@
       "nodeDisplay": 0,
       "nodeGhost": true,
       "tags": [],
-      "values": []
+      "values": [
+        {"name": "vertical", "definition": "Boolean", "defaults": false},
+        {"name": "initial_direction", "definition": "Integer", "defaults": -1, "bounded": false, "min": -1, "max": 1}
+      ]
     },
     {
       "exportID": "31169632",

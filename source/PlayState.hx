@@ -136,13 +136,27 @@ class PlayState extends FlxState
 		else if ((b is Anomaly))
 		{
 			var anomaly:Anomaly = cast b;
-			if (b.justTouched(FlxObject.RIGHT))
+			if (!anomaly.isVertical())
 			{
-				anomaly.flipDirection(-1);
+				if (b.justTouched(FlxObject.RIGHT))
+				{
+					anomaly.flipDirection(-1);
+				}
+				else if (b.justTouched(FlxObject.LEFT))
+				{
+					anomaly.flipDirection(1);
+				}
 			}
-			else if (b.justTouched(FlxObject.LEFT))
+			else
 			{
-				anomaly.flipDirection(1);
+				if (b.justTouched(FlxObject.UP))
+				{
+					anomaly.flipDirection(1);
+				}
+				else if (b.justTouched(FlxObject.DOWN))
+				{
+					anomaly.flipDirection(-1);
+				}
 			}
 		}
 	}
@@ -163,10 +177,20 @@ class PlayState extends FlxState
 			var marker:Marker = cast b;
 			if (marker.getMarkerType() == HAZARD_BOUNCE)
 			{
-				if (marker.x < anomaly.x)
-					anomaly.flipDirection(1);
+				if (anomaly.isVertical())
+				{
+					if (marker.y < anomaly.y)
+						anomaly.flipDirection(1);
+					else
+						anomaly.flipDirection(-1);
+				}
 				else
-					anomaly.flipDirection(-1);
+				{
+					if (marker.x < anomaly.x)
+						anomaly.flipDirection(1);
+					else
+						anomaly.flipDirection(-1);
+				}
 			}
 		}
 		else if ((a is Player) && (b is Anomaly))
@@ -198,7 +222,7 @@ class PlayState extends FlxState
 		}
 		else if (entity.name == "anomaly")
 		{
-			var anomaly = new Anomaly(entity.x, entity.y);
+			var anomaly = new Anomaly(entity.x, entity.y, entity.values.vertical, entity.values.initial_direction);
 			_actors.add(anomaly);
 			_enemies.add(anomaly);
 		}
