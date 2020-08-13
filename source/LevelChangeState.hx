@@ -27,14 +27,17 @@ class LevelChangeState extends FlxState
 		add(background);
 
 		var levelCompleteText = new FlxText(0, 0, FlxG.width, "LEVEL COMPLETED!");
-		levelCompleteText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
+		levelCompleteText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
+			0x33000000);
 
 		_pressAnyKeyText = new FlxText(0, 0, FlxG.width, "PRESS ANY KEY");
-		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
+		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
+			0x33000000);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height;
 
 		var scoreText = new FlxText(0, 16, FlxG.width);
-		scoreText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
+		scoreText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
+			0x33000000);
 		LevelManager.instance.getScore().scoreText = scoreText;
 		LevelManager.instance.getScore().updateScore();
 

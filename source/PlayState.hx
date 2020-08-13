@@ -56,7 +56,8 @@ class PlayState extends FlxState
 		// Gameplay
 		_player = new Player(0, 0);
 		_scoreText = new FlxText(0, 0);
-		_scoreText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW, 0x33000000);
+		_scoreText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW,
+			0x33000000);
 		_scoreText.scrollFactor.set(0, 0);
 		LevelManager.instance.getScore().scoreText = _scoreText;
 		_actors = new FlxGroup();

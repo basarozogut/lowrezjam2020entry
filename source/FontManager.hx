@@ -8,6 +8,11 @@ class FontManager
 
 	public function getScoreFont():String
 	{
-		return "assets/fonts/8_bit_wonder/8_bit_wonder.ttf";
+		return "assets/fonts/goodbyeDespair.ttf";
+	}
+
+	public function getScoreFontSize():Int
+	{
+		return 8;
 	}
 }

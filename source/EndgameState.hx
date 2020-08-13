@@ -14,10 +14,10 @@ class EndgameState extends FlxState
 	var _text:Array<String> = [
 		"\n\n\nGAME\nCOMPLETED!",
 		"\n\n\nFINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(),
-		"\n\nGFX\nMUSIC\nCODING\n\nCHILLWAVES",
-		"\n\nSFX MADE\nWITH SFXR\n\nBY\nTOMAS PETTERSSON",
-		"\n\n8 BIT WONDER\nFONT by\n\nJoiro Hatagaya",
-		"\n\n\nTHANKS FOR\nPLAYING",
+		"\nGFX\nMUSIC\nCODING\n\nCHILLWAVES",
+		"\nSFX MADE\nWITH SFXR\n\nBY\nTOMAS PETTERSSON",
+		"\n'GOODBYE DESPAIR'\nFONT BY\n\nUkiyoMoji Fonts",
+		"\n\n\nTHANKS FOR\nPLAYING!",
 		"\n\n\nPRESS ANY KEY\nTO EXIT"
 	];
 	var _currentTextIndex:Int;
@@ -49,7 +49,8 @@ class EndgameState extends FlxState
 
 		_levelCompleteText = new FlxText(0, 0, FlxG.width);
 		_levelCompleteText.y = 0;
-		_levelCompleteText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW, 0x33000000);
+		_levelCompleteText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER,
+			SHADOW, 0xFF000000);
 		add(_levelCompleteText);
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_credits__ogg, .5, true);
