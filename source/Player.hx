@@ -13,6 +13,8 @@ import flixel.util.FlxSpriteUtil;
 
 class Player extends FlxSprite
 {
+	public var allowControls:Bool = true;
+
 	private var _canJump:Bool = false;
 	private var _canJumpOnAir:Bool = false;
 	private var _jumpCount:Int = 0;
@@ -129,7 +131,10 @@ class Player extends FlxSprite
 	override public function update(elapsed:Float)
 	{
 		updateFlags();
-		updateInput();
+		if (allowControls)
+		{
+			updateInput();
+		}
 		updateAnimations();
 
 		super.update(elapsed);

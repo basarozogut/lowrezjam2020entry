@@ -53,8 +53,8 @@ class PlayState extends FlxState
 
 		// Gameplay
 		_player = new Player(0, 0);
-		_scoreText = new FlxText(0, 0, 0, "");
-		_scoreText.setFormat("assets/fonts/8_bit_wonder/8_bit_wonder.ttf", 6, FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW, 0x33000000);
+		_scoreText = new FlxText(0, 0);
+		_scoreText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW, 0x33000000);
 		_scoreText.scrollFactor.set(0, 0);
 		LevelManager.instance.getScore().scoreText = _scoreText;
 		_actors = new FlxGroup();
@@ -97,11 +97,7 @@ class PlayState extends FlxState
 
 		_emitter.start(false, .02);
 
-		if (FlxG.sound.music == null) // don't restart the music if it's already playing
-		{
-			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
-		}
-
+		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
 		FlxG.mouse.visible = false;
 
 		super.create();
@@ -296,15 +292,7 @@ class PlayState extends FlxState
 
 	private function nextLevel():Void
 	{
-		LevelManager.instance.nextLevel();
-		if (LevelManager.instance.getCurrentLevel() != null)
-		{
-			FlxG.switchState(new PlayState());
-		}
-		else
-		{
-			FlxG.switchState(new EndgameState());
-		}
+		FlxG.switchState(new LevelChangeState());
 	}
 
 	private function resetGame()
