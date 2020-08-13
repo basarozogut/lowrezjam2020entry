@@ -8,8 +8,8 @@
   "directoryDepth": 5,
   "layerGridDefaultSize": {"x": 8, "y": 8},
   "levelDefaultSize": {"x": 320, "y": 240},
-  "levelMinSize": {"x": 128, "y": 64},
-  "levelMaxSize": {"x": 1024, "y": 128},
+  "levelMinSize": {"x": 64, "y": 64},
+  "levelMaxSize": {"x": 1024, "y": 1024},
   "levelValues": [
     {"name": "auto_scroll", "definition": "Boolean", "defaults": false}
   ],

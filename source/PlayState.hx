@@ -134,6 +134,11 @@ class PlayState extends FlxState
 			{
 				gameOver();
 			}
+
+			if (_player.x > _camTarget.x)
+			{
+				_camTarget.x = _player.x;
+			}
 		}
 
 		if ((_player.y > _tilemap.y + _tilemap.height))

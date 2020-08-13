@@ -10,7 +10,7 @@ class Anomaly extends FlxSprite
 
 	public function new(x:Float = 0, y:Float = 0, vertical:Bool, initialDirection:Int)
 	{
-		super(x, y);
+		super(x + 1, y + 1);
 
 		_vertical = vertical;
 

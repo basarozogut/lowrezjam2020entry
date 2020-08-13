@@ -253,7 +253,14 @@
         {"name": "coin", "id": 67, "_eid": "26570596", "x": 696, "y": 16, "originX": 0, "originY": 0},
         {"name": "coin", "id": 68, "_eid": "26570596", "x": 704, "y": 16, "originX": 0, "originY": 0},
         {"name": "coin", "id": 69, "_eid": "26570596", "x": 672, "y": 32, "originX": 0, "originY": 0},
-        {"name": "coin", "id": 70, "_eid": "26570596", "x": 656, "y": 48, "originX": 0, "originY": 0}
+        {"name": "coin", "id": 70, "_eid": "26570596", "x": 656, "y": 48, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 71, "_eid": "26570596", "x": 408, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 72, "_eid": "26570596", "x": 416, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 73, "_eid": "26570596", "x": 424, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 74, "_eid": "26570596", "x": 432, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 75, "_eid": "26570596", "x": 440, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 76, "_eid": "26570596", "x": 448, "y": 64, "originX": 0, "originY": 0},
+        {"name": "coin", "id": 77, "_eid": "26570596", "x": 456, "y": 64, "originX": 0, "originY": 0}
       ]
     },
     {
