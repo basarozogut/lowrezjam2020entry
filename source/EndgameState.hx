@@ -7,7 +7,6 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import openfl.Lib;
 
 class EndgameState extends FlxState
 {
