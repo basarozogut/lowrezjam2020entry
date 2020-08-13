@@ -70,7 +70,6 @@ class PlayState extends FlxState
 		add(background);
 
 		loadLevel();
-		generateBackgroundTiles();
 
 		add(_tilemap);
 		add(_collectibles);
@@ -261,31 +260,6 @@ class PlayState extends FlxState
 			var marker = new Marker(entity.x, entity.y, HAZARD_BOUNCE);
 			_markers.add(marker);
 		}
-	}
-
-	private function generateBackgroundTiles()
-	{
-		var tileSize = 4;
-		var nTilesHorizontal:Int = cast _tilemap.width / tileSize;
-		var nTilesVertical:Int = cast 64 / tileSize / 3;
-		var map = [];
-
-		for (i in 0...nTilesVertical)
-		{
-			var row = [];
-			for (j in 0...nTilesHorizontal)
-			{
-				var solid = FlxG.random.bool(20);
-				row.push(solid ? 1 : 0);
-			}
-			map.push(row);
-		}
-
-		var bgTilemap = new FlxTilemap();
-		bgTilemap.loadMapFrom2DArray(map, AssetPaths.tileset_bg__png, tileSize, tileSize);
-		bgTilemap.scrollFactor.set(0.2, 0.2);
-		bgTilemap.y = _tilemap.y + _tilemap.height - bgTilemap.height;
-		add(bgTilemap);
 	}
 
 	private function gameOver():Void
