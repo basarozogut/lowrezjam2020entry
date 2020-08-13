@@ -283,13 +283,14 @@ class PlayState extends FlxState
 
 		timer.start(2, timer -> FlxG.camera.fade(FlxColor.BLACK, 1, false, function()
 		{
-			LevelManager.instance.getScore().reset();
+			LevelManager.instance.getScore().resetLevelScore();
 			FlxG.switchState(new PlayState());
 		}));
 	}
 
 	private function nextLevel():Void
 	{
+		LevelManager.instance.getScore().finishLevel();
 		FlxG.switchState(new LevelChangeState());
 	}
 

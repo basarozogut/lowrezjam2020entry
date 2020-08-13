@@ -14,11 +14,12 @@ import openfl.Lib;
 class EndgameState extends FlxState
 {
 	var _text:Array<String> = [
-		"GAME\nCOMPLETED!",
-		"GFX - SFX\nMUSIC - CODING\nCHILLWAVES",
-		"8 BIT WONDER\nFONT by\nJoiro Hatagaya",
-		"THANKS FOR\nPLAYING",
-		"PRESS ANY KEY\nTO EXIT"
+		"\n\n\nGAME\nCOMPLETED!",
+		"\n\n\nFINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(),
+		"\n\nGFX - SFX\nMUSIC - CODING\n\nCHILLWAVES",
+		"\n8 BIT WONDER\nFONT by\n\nJoiro Hatagaya",
+		"\n\n\nTHANKS FOR\nPLAYING",
+		"\n\n\nPRESS ANY KEY\nTO EXIT"
 	];
 	var _currentTextIndex:Int;
 	var _levelCompleteText:FlxText;
@@ -32,7 +33,7 @@ class EndgameState extends FlxState
 		_waitTimer = new FlxTimer(FlxTimer.globalManager);
 
 		_levelCompleteText = new FlxText(0, 0, FlxG.width);
-		_levelCompleteText.y = FlxG.height / 2;
+		_levelCompleteText.y = 0;
 		_levelCompleteText.setFormat(FontManager.instance.getScoreFont(), 6, FlxColor.WHITE, FlxTextAlign.CENTER);
 		add(_levelCompleteText);
 
@@ -52,7 +53,6 @@ class EndgameState extends FlxState
 	{
 		_levelCompleteText.x = -FlxG.width;
 		var text = _text[_currentTextIndex];
-		_levelCompleteText.y = FlxG.height / 2 - newlineCount(text) * 10;
 		_levelCompleteText.text = text;
 
 		_currentTextIndex = (_currentTextIndex + 1) % _text.length;
