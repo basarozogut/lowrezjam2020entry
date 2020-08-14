@@ -73,11 +73,11 @@ class PlayState extends FlxState
 		FlxG.camera.setScrollBoundsRect(0, 0, cast _tilemap.width, cast _tilemap.height, true);
 		if (_autoScroll)
 		{
-			FlxG.camera.follow(_camTarget, PLATFORMER, .3);
+			FlxG.camera.follow(_camTarget, PLATFORMER);
 		}
 		else
 		{
-			FlxG.camera.follow(_player, PLATFORMER, .3);
+			FlxG.camera.follow(_player, PLATFORMER);
 		}
 
 		add(_snowParticleMaker.emitter);

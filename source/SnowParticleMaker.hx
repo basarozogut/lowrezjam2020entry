@@ -30,6 +30,6 @@ class SnowParticleMaker
 
 	public function start()
 	{
-		emitter.start(false, .02);
+		emitter.start(false, .04);
 	}
 }
