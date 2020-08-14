@@ -2,3 +2,5 @@ start
 chase
 the_tower
 mess
+the_mario_shortcut
+descent

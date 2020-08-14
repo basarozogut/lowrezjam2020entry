@@ -213,6 +213,6 @@
     }
   ],
   "tilesets": [
-    {"label": "tiles", "path": "../images/tileset.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAFVBMVEUAAADK+Pya5PVJcriR0PJfkNT///9PS7C5AAAAB3RSTlMA////////pX+m+wAAAKxJREFUOI3lklESxCAIQzHY3v/ISxWRYHuCzUfHkWcCTEVczXW7uksCAGB1HVU7vAImxTRCH0hLwOANcL05HEA7Iy41yF83dtBrSDsp9aCuXiRxuEmyggLw8WNZa5AEPNPPbT2M1cFAQ9IAisOc3j/tjNjbmxbwjAzs2dytOOTpt5/Ui0XQolZvBJADPhxAABlwBPUQb/ceEBkoDiXiVRERC6FoO6wfRb70H8APQ0kJ/DpDJzEAAAAASUVORK5CYII=", "tileWidth": 8, "tileHeight": 8, "tileSeparationX": 0, "tileSeparationY": 0}
+    {"label": "tiles", "path": "../images/tileset.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAHlBMVEUAAADK+Pya5PVJcriR0PJfkNT///8ACBUODCZkmZdxrK3yAAAACnRSTlMA////////////fokUVgAAANdJREFUOI11kgsOxCAIRBFtlftfeFU+AnYnaTXlOSOkAKIiekVNBAYg4qzXXZ2bT2CqIhth20hxwOYnIPpyuIByRzx1QnK6RIf6bNUW5O5QRS0JbPMGgQYZIO3bsLQRB6zueVqLmXWMQEGnDSQH7l5e5Y4402MLlAwPnN7ELTn47o8f5A9KhEHp3QIQHPCPAwYgGMSIcAc7e+aAloHJIUV8yiJsICF6bnrQ6FlwfwMgWRmwg4PX9f8Rr2RANOCSA0ZwUaAT9eww1ILUjTww5CHS+jK575D0AxZmD6HocqaDAAAAAElFTkSuQmCC", "tileWidth": 8, "tileHeight": 8, "tileSeparationX": 0, "tileSeparationY": 0}
   ]
 }
