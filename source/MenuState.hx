@@ -27,24 +27,16 @@ class MenuState extends FlxState
 
 		_sun = new FlxSprite();
 		_sun.loadGraphic(AssetPaths.sun__png);
-		_sun.x = FlxG.width - _sun.width - 4;
-		_sun.y = 4;
+		_sun.x = FlxG.width - _sun.width - 2;
+		_sun.y = 2;
 		add(_sun);
 
-		FlxTween.tween(_sun, {y: 6}, 1, {
+		FlxTween.tween(_sun, {y: 4}, 1, {
 			type: FlxTweenType.PINGPONG,
 			ease: FlxEase.cubeInOut,
 		});
 
 		var yOffset = 12;
-
-		var logoShadow = new FlxSprite();
-		logoShadow.loadGraphic(AssetPaths.intro__png);
-		logoShadow.colorTransform.color = 0xFF000000;
-		logoShadow.colorTransform.alphaOffset = -128;
-		logoShadow.x = FlxG.width / 2 - logoShadow.width / 2 + 1;
-		logoShadow.y = yOffset + 1;
-		add(logoShadow);
 
 		var logo = new FlxSprite();
 		logo.loadGraphic(AssetPaths.intro__png);
@@ -52,8 +44,8 @@ class MenuState extends FlxState
 		logo.y = yOffset;
 		add(logo);
 
-		var tileRow = [2, 2, 2, 2, 2, 2, 2, 2];
-		var tileRow2 = [4, 4, 4, 4, 4, 4, 4, 4];
+		var tileRow = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
+		var tileRow2 = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
 		var tilemap = new FlxTilemap();
 		tilemap.loadMapFrom2DArray([tileRow, tileRow2, tileRow2], AssetPaths.tileset__png, 8, 8);
 		tilemap.x = 0;
@@ -68,6 +60,10 @@ class MenuState extends FlxState
 			0x33000000);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height - 2;
 		add(_pressAnyKeyText);
+
+		var snowParticleMaker = new SnowParticleMaker();
+		add(snowParticleMaker.emitter);
+		snowParticleMaker.start();
 
 		bgColor = 0xff55ed8d;
 

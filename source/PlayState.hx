@@ -31,28 +31,13 @@ class PlayState extends FlxState
 
 	private var _scoreText:FlxText;
 
-	private var _emitter:FlxEmitter;
-	private var _whitePixel:FlxParticle;
+	private var _snowParticleMaker:SnowParticleMaker;
 
 	private var _autoScroll:Bool = false;
 
 	override public function create()
 	{
-		// Particles
-		var nParticles = 200;
-		_emitter = new FlxEmitter(0, 0, nParticles);
-		_emitter.velocity.set(-200, -10, -100, 10);
-		_emitter.width = FlxG.width;
-		_emitter.height = FlxG.height;
-
-		for (i in 0...nParticles)
-		{
-			_whitePixel = new FlxParticle();
-			_whitePixel.scrollFactor.set(0, 0);
-			_whitePixel.makeGraphic(1, 1, 0xAAFFFFFF);
-			_whitePixel.visible = false; // Make sure the particle doesn't show up at (0, 0)
-			_emitter.add(_whitePixel);
-		}
+		_snowParticleMaker = new SnowParticleMaker();
 
 		// Gameplay
 		_player = new Player(0, 0);
@@ -95,10 +80,10 @@ class PlayState extends FlxState
 			FlxG.camera.follow(_player, PLATFORMER, .3);
 		}
 
-		add(_emitter);
+		add(_snowParticleMaker.emitter);
 		add(_scoreText);
 
-		_emitter.start(false, .02);
+		_snowParticleMaker.start();
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_ingame__ogg, .5, true);
 
