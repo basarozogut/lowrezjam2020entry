@@ -19,6 +19,8 @@ class PlayState extends FlxState
 {
 	private var _player:Player;
 	private var _tilemap:FlxTilemap;
+	private var _backgroundTilemap:FlxTilemap;
+	private var _foregroundTilemap:FlxTilemap;
 	private var _camTarget:FlxObject;
 
 	// Physical groups
@@ -58,10 +60,12 @@ class PlayState extends FlxState
 
 		loadLevel();
 
+		add(_backgroundTilemap);
 		add(_tilemap);
 		add(_collectibles);
 		add(_markers);
 		add(_actors);
+		add(_foregroundTilemap);
 
 		_actors.add(_player);
 
@@ -232,8 +236,9 @@ class PlayState extends FlxState
 
 		_autoScroll = loader.getLevelValue("auto_scroll");
 
-		_tilemap = new FlxTilemap();
 		_tilemap = loader.loadTilemap(AssetPaths.tileset__png, "walls");
+		_backgroundTilemap = loader.loadTilemap(AssetPaths.tileset__png, "background_tiles");
+		_foregroundTilemap = loader.loadTilemap(AssetPaths.tileset__png, "foreground_tiles");
 
 		loader.loadEntities(placeEntities, "entities");
 		loader.loadEntities(placeEntities, "collectibles");

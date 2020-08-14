@@ -20,6 +20,15 @@
   "entityTags": [],
   "layers": [
     {
+      "definition": "tile",
+      "name": "foreground_tiles",
+      "gridSize": {"x": 8, "y": 8},
+      "exportID": "40208349",
+      "exportMode": 0,
+      "arrayMode": 0,
+      "defaultTileset": "tiles"
+    },
+    {
       "definition": "entity",
       "name": "entities",
       "gridSize": {"x": 8, "y": 8},
@@ -40,6 +49,15 @@
       "name": "walls",
       "gridSize": {"x": 8, "y": 8},
       "exportID": "26473805",
+      "exportMode": 0,
+      "arrayMode": 0,
+      "defaultTileset": "tiles"
+    },
+    {
+      "definition": "tile",
+      "name": "background_tiles",
+      "gridSize": {"x": 8, "y": 8},
+      "exportID": "40209875",
       "exportMode": 0,
       "arrayMode": 0,
       "defaultTileset": "tiles"
@@ -195,6 +213,6 @@
     }
   ],
   "tilesets": [
-    {"label": "tiles", "path": "../images/tileset.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAFVBMVEUAAADK+Pya5PVJcriR0PJfkNT///9PS7C5AAAAB3RSTlMA////////pX+m+wAAAKlJREFUOI3lklESxCAIQyHY3v/IpYpItHuCfR87nfqaCLMigQZ30AJJAYCfWz/1h0/BMYwgtK5oEbrvQvCVcAh6VlzmUnytnGBXxxpR7mBB25B8uAmZRSnE+LmsOUgR3unHtl7Hz8GCotCFLWFMHz96VqztjQhERxXWbJG2JdTpV57sL6ZBi5p3I4ES8CMBJFAAV9Ad8tu1B2QHtoSt4pOsyIVQdflH/TkP1zoJPGFnGiEAAAAASUVORK5CYII=", "tileWidth": 8, "tileHeight": 8, "tileSeparationX": 0, "tileSeparationY": 0}
+    {"label": "tiles", "path": "../images/tileset.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAFVBMVEUAAADK+Pya5PVJcriR0PJfkNT///9PS7C5AAAAB3RSTlMA////////pX+m+wAAAKxJREFUOI3lklESxCAIQzHY3v/ISxWRYHuCzUfHkWcCTEVczXW7uksCAGB1HVU7vAImxTRCH0hLwOANcL05HEA7Iy41yF83dtBrSDsp9aCuXiRxuEmyggLw8WNZa5AEPNPPbT2M1cFAQ9IAisOc3j/tjNjbmxbwjAzs2dytOOTpt5/Ui0XQolZvBJADPhxAABlwBPUQb/ceEBkoDiXiVRERC6FoO6wfRb70H8APQ0kJ/DpDJzEAAAAASUVORK5CYII=", "tileWidth": 8, "tileHeight": 8, "tileSeparationX": 0, "tileSeparationY": 0}
   ]
 }
