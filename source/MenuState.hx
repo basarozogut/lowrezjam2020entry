@@ -36,7 +36,7 @@ class MenuState extends FlxState
 			ease: FlxEase.cubeInOut,
 		});
 
-		var yOffset = 12;
+		var yOffset = 5;
 
 		var logo = new FlxSprite();
 		logo.loadGraphic(AssetPaths.intro__png);
@@ -44,10 +44,14 @@ class MenuState extends FlxState
 		logo.y = yOffset;
 		add(logo);
 
-		var tileRow = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2];
-		var tileRow2 = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4];
+		var rows = [
+			[1, 0, 0, 0, 0, 0, 0, 1],
+			[2, 2, 2, 2, 2, 2, 2, 2],
+			[4, 4, 3, 4, 4, 4, 4, 4],
+			[4, 4, 4, 4, 3, 3, 4, 4]
+		];
 		var tilemap = new FlxTilemap();
-		tilemap.loadMapFrom2DArray([tileRow, tileRow2, tileRow2], AssetPaths.tileset__png, 8, 8);
+		tilemap.loadMapFrom2DArray(rows, AssetPaths.tileset__png, 8, 8);
 		tilemap.x = 0;
 		tilemap.y = FlxG.height - tilemap.height;
 		add(tilemap);
