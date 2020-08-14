@@ -70,10 +70,17 @@ class LevelChangeState extends FlxState
 
 	override public function update(elapsed:Float)
 	{
+		#if debug
+		if (FlxG.keys.justPressed.ANY)
+		{
+			nextLevel();
+		}
+		#else
 		if (FlxG.keys.justPressed.ANY && _allowKeyPressTimer <= 0)
 		{
 			nextLevel();
 		}
+		#end
 
 		if (_allowKeyPressTimer > 0)
 		{

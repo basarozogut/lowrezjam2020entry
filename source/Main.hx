@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxGame;
+import lime.utils.Assets;
 import openfl.display.Sprite;
 
 class Main extends Sprite
@@ -9,12 +10,22 @@ class Main extends Sprite
 	{
 		super();
 
-		LevelManager.instance.addLevel(AssetPaths.level_start__json);
-		LevelManager.instance.addLevel(AssetPaths.level_chase__json);
-		LevelManager.instance.addLevel(AssetPaths.level_the_tower__json);
-		LevelManager.instance.addLevel(AssetPaths.level_mess__json);
-		LevelManager.instance.resetState();
+		readLevelList();
 
 		addChild(new FlxGame(64, 64, MenuState));
+	}
+
+	private function readLevelList()
+	{
+		var levelManager = LevelManager.instance;
+
+		var levelListText = Assets.getText(AssetPaths.level_list__txt);
+		var levelNames = levelListText.split("\r\n");
+		for (levelName in levelNames)
+		{
+			levelManager.addLevel('assets/data/level_$levelName.json');
+		}
+
+		levelManager.resetState();
 	}
 }
