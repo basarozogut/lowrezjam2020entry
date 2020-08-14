@@ -17,6 +17,7 @@ class MenuState extends FlxState
 	var _textBlinkTimer:Float;
 
 	var _pressAnyKeyText:FlxText;
+	var _pressedKey:Bool = false;
 
 	override public function create()
 	{
@@ -84,9 +85,14 @@ class MenuState extends FlxState
 		{
 			Sys.exit(0);
 		}
-		else if (FlxG.keys.justPressed.ANY)
+		else if (FlxG.keys.justPressed.ANY && !_pressedKey)
 		{
-			FlxG.switchState(new PlayState());
+			_pressedKey = true;
+			FlxG.sound.playMusic(AssetPaths.lowrezjam2020_start__ogg, .4, false);
+			FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+			{
+				FlxG.switchState(new PlayState());
+			});
 		}
 
 		_textBlinkTimer -= elapsed;
