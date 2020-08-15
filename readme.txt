@@ -14,7 +14,7 @@ Up arrow key - Jump / Double Jump
 CREDITS
 -------
 GFX / MUSIC / CODING / LEVEL DESIGN - chillwaves
-SFX made with SFXR by Tomas Pettersson
+SFX made with sfxr by Tomas Pettersson
 Title font "8 Bit Wonder" by Joiro Hatagaya
 In-game font "Goodbye Despair" by UkiyoMoji Fonts
 Game Engine - HaxeFlixel
