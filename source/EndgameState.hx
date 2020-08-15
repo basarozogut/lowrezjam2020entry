@@ -83,10 +83,13 @@ class EndgameState extends FlxState
 		_levelCompleteText.y = FlxG.height / 2 - _levelCompleteText.height / 2;
 
 		_currentTextIndex++;
+		if (_currentTextIndex > 1)
+		{
+			_canQuit = true;
+		}
 		if (_currentTextIndex >= _text.length)
 		{
 			_currentTextIndex = 0;
-			_canQuit = true;
 		}
 
 		FlxTween.tween(_levelCompleteText, {x: FlxG.width / 2 - _levelCompleteText.width / 2}, 1, {
