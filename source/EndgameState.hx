@@ -13,8 +13,9 @@ class EndgameState extends FlxState
 {
 	var _text:Array<String> = [
 		"GAME\nCOMPLETED!", "FINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(), "A GAME BY\n\nCHILLWAVES", "MADE FOR\n\nLOWREZJAM\n2020",
-		"GFX\nMUSIC\nCODING\n\nCHILLWAVES", "SFX MADE\nWITH SFXR\n\nBY\nTOMAS\nPETTERSSON", "TITLE FONT\n'8 BIT WONDER'\nBY\n\nJoiro\nHatagaya",
-		"'GOODBYE\nDESPAIR'\nFONT BY\n\nUkiyoMoji\nFonts", "GAME ENGINE\n\nHAXEFLIXEL", "THANKS FOR\nPLAYING!", "PRESS\nANY KEY"
+		"GFX\nMUSIC\nCODING\nLEVEL DESIGN\n\nCHILLWAVES", "SFX MADE\nWITH SFXR\n\nBY\nTOMAS\nPETTERSSON",
+		"TITLE FONT\n\"8 BIT WONDER\"\nBY\n\nJoiro\nHatagaya", "\"GOODBYE\nDESPAIR\"\nFONT BY\n\nUkiyoMoji\nFonts", "GAME ENGINE\n\nHAXEFLIXEL",
+		"THANKS FOR\nPLAYING!", "PRESS\nANY KEY"
 	];
 	var _currentTextIndex:Int;
 	var _levelCompleteText:FlxBitmapText;
