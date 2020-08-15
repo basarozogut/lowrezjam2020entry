@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -11,13 +12,12 @@ import flixel.util.FlxTimer;
 class EndgameState extends FlxState
 {
 	var _text:Array<String> = [
-		"\n\n\nGAME\nCOMPLETED!", "\n\n\nFINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(), "\n\nA GAME BY\n\nCHILLWAVES",
-		"\n\nMADE FOR\n\nLOWREZJAM 2020", "\nGFX\nMUSIC\nCODING\n\nCHILLWAVES", "\nSFX MADE\nWITH SFXR\n\nBY\nTOMAS PETTERSSON",
-		"\nTITLE FONT\n'8 BIT WONDER'\nBY\n\nJoiro Hatagaya", "\n'GOODBYE DESPAIR'\nFONT BY\n\nUkiyoMoji Fonts", "\n\n\nGAME ENGINE\n\nHAXEFLIXEL",
-		"\n\n\nTHANKS FOR\nPLAYING!", "\n\n\nPRESS ANY KEY\nTO EXIT"
+		"GAME\nCOMPLETED!", "FINAL SCORE\n" + LevelManager.instance.getScore().getAmountText(), "A GAME BY\n\nCHILLWAVES", "MADE FOR\n\nLOWREZJAM\n2020",
+		"GFX\nMUSIC\nCODING\n\nCHILLWAVES", "SFX MADE\nWITH SFXR\n\nBY\nTOMAS\nPETTERSSON", "TITLE FONT\n'8 BIT WONDER'\nBY\n\nJoiro\nHatagaya",
+		"'GOODBYE\nDESPAIR'\nFONT BY\n\nUkiyoMoji\nFonts", "GAME ENGINE\n\nHAXEFLIXEL", "THANKS FOR\nPLAYING!", "PRESS\nANY KEY"
 	];
 	var _currentTextIndex:Int;
-	var _levelCompleteText:FlxText;
+	var _levelCompleteText:FlxBitmapText;
 	var _waitTimer:FlxTimer;
 	var _canQuit:Bool;
 
@@ -43,10 +43,9 @@ class EndgameState extends FlxState
 			add(coin);
 		}
 
-		_levelCompleteText = new FlxText(0, 0, FlxG.width);
+		_levelCompleteText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
 		_levelCompleteText.y = 0;
-		_levelCompleteText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER,
-			SHADOW, 0xFF000000);
+		FontManager.instance.setBitmapTextShadow(_levelCompleteText);
 		add(_levelCompleteText);
 
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_credits__ogg, .5, true);
@@ -77,9 +76,11 @@ class EndgameState extends FlxState
 
 	private function nextText()
 	{
-		_levelCompleteText.x = -FlxG.width;
 		var text = _text[_currentTextIndex];
 		_levelCompleteText.text = text;
+		FontManager.instance.setBitmapTextCentered(_levelCompleteText);
+		_levelCompleteText.x = -FlxG.width;
+		_levelCompleteText.y = FlxG.height / 2 - _levelCompleteText.height / 2;
 
 		_currentTextIndex++;
 		if (_currentTextIndex >= _text.length)
@@ -88,7 +89,7 @@ class EndgameState extends FlxState
 			_canQuit = true;
 		}
 
-		FlxTween.tween(_levelCompleteText, {x: 0}, 1, {
+		FlxTween.tween(_levelCompleteText, {x: FlxG.width / 2 - _levelCompleteText.width / 2}, 1, {
 			type: FlxTweenType.ONESHOT,
 			ease: FlxEase.cubeInOut,
 			onComplete: tween -> _waitTimer.start(2, (timer) -> hideText())
