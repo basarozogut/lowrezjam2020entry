@@ -1,6 +1,8 @@
 start
 chase
-the_tower
 mess
-the_mario_shortcut
+the_tower
 descent
+conduit
+floating_islands
+the_mario_shortcut
