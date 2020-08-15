@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.tweens.FlxEase;
@@ -16,7 +17,7 @@ class MenuState extends FlxState
 	var _textBlinkTimerMax:Float;
 	var _textBlinkTimer:Float;
 
-	var _pressAnyKeyText:FlxText;
+	var _pressAnyKeyText:FlxBitmapText;
 	var _pressedKey:Bool = false;
 
 	override public function create()
@@ -60,9 +61,10 @@ class MenuState extends FlxState
 		_textBlinkTimerMax = 1;
 		_textBlinkTimer = _textBlinkTimerMax;
 
-		_pressAnyKeyText = new FlxText(0, 0, FlxG.width, "PRESS ANY KEY");
-		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
-			0x33000000);
+		_pressAnyKeyText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
+		_pressAnyKeyText.text = "PRESS\nANY KEY";
+		FontManager.instance.setBitmapTextShadow(_pressAnyKeyText);
+		FontManager.instance.setBitmapTextCentered(_pressAnyKeyText);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height - 2;
 		add(_pressAnyKeyText);
 

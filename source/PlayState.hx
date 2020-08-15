@@ -9,6 +9,7 @@ import flixel.effects.FlxFlicker;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup;
+import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
@@ -31,7 +32,7 @@ class PlayState extends FlxState
 	// Logical groups
 	private var _enemies:FlxGroup;
 
-	private var _scoreText:FlxText;
+	private var _scoreText:FlxBitmapText;
 
 	private var _snowParticleMaker:SnowParticleMaker;
 
@@ -43,9 +44,8 @@ class PlayState extends FlxState
 
 		// Gameplay
 		_player = new Player(0, 0);
-		_scoreText = new FlxText(0, 0);
-		_scoreText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.LEFT, SHADOW,
-			0x33000000);
+		_scoreText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
+		FontManager.instance.setBitmapTextShadow(_scoreText);
 		_scoreText.scrollFactor.set(0, 0);
 		LevelManager.instance.getScore().scoreText = _scoreText;
 		_actors = new FlxGroup();
@@ -112,6 +112,11 @@ class PlayState extends FlxState
 		if (FlxG.keys.justPressed.N)
 		{
 			nextLevel();
+		}
+
+		if (FlxG.keys.justPressed.P)
+		{
+			FlxG.switchState(new EndgameState());
 		}
 		#end
 

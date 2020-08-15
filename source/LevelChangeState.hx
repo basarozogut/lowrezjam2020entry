@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
@@ -14,7 +15,7 @@ class LevelChangeState extends FlxState
 
 	var _allowKeyPressTimer:Float;
 
-	var _pressAnyKeyText:FlxText;
+	var _pressAnyKeyText:FlxBitmapText;
 
 	override public function create()
 	{
@@ -30,21 +31,25 @@ class LevelChangeState extends FlxState
 		background.scrollFactor.set(0, 0);
 		add(background);
 
-		var levelCompleteText = new FlxText(0, 0, FlxG.width, "LEVEL COMPLETED!");
-		levelCompleteText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
-			0x33000000);
+		var levelCompleteText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
+		levelCompleteText.text = "LEVEL\nCOMPLETED!";
+		FontManager.instance.setBitmapTextShadow(levelCompleteText);
+		FontManager.instance.setBitmapTextCentered(levelCompleteText);
+		levelCompleteText.y = 2;
 
-		_pressAnyKeyText = new FlxText(0, 0, FlxG.width, "PRESS ANY KEY");
-		_pressAnyKeyText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
-			0x33000000);
-		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height;
+		_pressAnyKeyText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
+		_pressAnyKeyText.text = "PRESS\nANY KEY";
+		FontManager.instance.setBitmapTextShadow(_pressAnyKeyText);
+		FontManager.instance.setBitmapTextCentered(_pressAnyKeyText);
+		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height - 2;
 		_pressAnyKeyText.visible = false;
 
-		var scoreText = new FlxText(0, 16, FlxG.width);
-		scoreText.setFormat(FontManager.instance.getScoreFont(), FontManager.instance.getScoreFontSize(), FlxColor.WHITE, FlxTextAlign.CENTER, SHADOW,
-			0x33000000);
+		var scoreText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
+		FontManager.instance.setBitmapTextShadow(scoreText);
 		LevelManager.instance.getScore().scoreText = scoreText;
 		LevelManager.instance.getScore().updateScore();
+		FontManager.instance.setBitmapTextCentered(scoreText);
+		scoreText.y = 18;
 
 		var player = new Player(0, 0);
 		player.allowControls = false;

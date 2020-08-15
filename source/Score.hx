@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
 
 class Score
@@ -8,14 +9,14 @@ class Score
 	private var _amount:Int = 0;
 	private var _previousScore:Int = 0;
 
-	@:isVar public var scoreText(get, set):FlxText;
+	@:isVar public var scoreText(get, set):FlxBitmapText;
 
 	function get_scoreText()
 	{
 		return scoreText;
 	}
 
-	function set_scoreText(val:FlxText)
+	function set_scoreText(val:FlxBitmapText)
 	{
 		this.scoreText = val;
 		updateScore();
