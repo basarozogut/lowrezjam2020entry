@@ -60,7 +60,8 @@ class EndgameState extends FlxState
 	{
 		if (FlxG.keys.justPressed.ANY && _canQuit)
 		{
-			Sys.exit(0);
+			LevelManager.instance.resetState();
+			FlxG.switchState(new MenuState());
 		}
 
 		for (coin in _coins)

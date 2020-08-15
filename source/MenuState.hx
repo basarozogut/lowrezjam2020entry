@@ -83,7 +83,9 @@ class MenuState extends FlxState
 	{
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
+			#if desktop
 			Sys.exit(0);
+			#end
 		}
 		else if (FlxG.keys.justPressed.ANY && !_pressedKey)
 		{
