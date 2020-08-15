@@ -11,6 +11,7 @@ import flixel.effects.particles.FlxParticle;
 import flixel.group.FlxGroup;
 import flixel.text.FlxBitmapText;
 import flixel.text.FlxText;
+import flixel.tile.FlxTileblock;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
@@ -26,6 +27,7 @@ class PlayState extends FlxState
 
 	// Physical groups
 	private var _actors:FlxGroup;
+	private var _levelBounds:FlxGroup;
 	private var _collectibles:FlxGroup;
 	private var _markers:FlxGroup;
 
@@ -49,6 +51,7 @@ class PlayState extends FlxState
 		_scoreText.scrollFactor.set(0, 0);
 		LevelManager.instance.getScore().scoreText = _scoreText;
 		_actors = new FlxGroup();
+		_levelBounds = new FlxGroup();
 		_collectibles = new FlxGroup();
 		_markers = new FlxGroup();
 		_enemies = new FlxGroup();
@@ -59,8 +62,12 @@ class PlayState extends FlxState
 		add(background);
 
 		loadLevel();
+		var tilemapHeight:Int = cast _tilemap.height;
+		var leftBuffer = new FlxTileblock(-15, 0, 16, tilemapHeight);
+		_levelBounds.add(leftBuffer);
 
 		add(_backgroundTilemap);
+		add(_levelBounds);
 		add(_tilemap);
 		add(_collectibles);
 		add(_markers);
@@ -154,6 +161,7 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(_tilemap, _actors, tilemapCollidedActor);
+		FlxG.collide(_player, _levelBounds);
 		FlxG.overlap(_actors, _collectibles, overlapped);
 		FlxG.overlap(_actors, _enemies, overlapped);
 		FlxG.overlap(_actors, _markers, overlapped);
