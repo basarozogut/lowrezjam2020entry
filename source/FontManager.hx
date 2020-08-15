@@ -10,16 +10,6 @@ class FontManager
 
 	public function new() {}
 
-	public function getScoreFont():String
-	{
-		return "assets/fonts/goodbyeDespair.ttf";
-	}
-
-	public function getScoreFontSize():Int
-	{
-		return 8;
-	}
-
 	public function getScoreFontBitmap():FlxBitmapFont
 	{
 		return FlxBitmapFont.fromAngelCode("assets/fonts/goodbye_despair_0.png", "assets/fonts/goodbye_despair.fnt");
