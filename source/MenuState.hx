@@ -38,31 +38,22 @@ class MenuState extends FlxState
 			ease: FlxEase.cubeInOut,
 		});
 
-		var yOffset = 5;
-
 		var logo = new FlxSprite();
 		logo.loadGraphic(AssetPaths.intro__png);
-		logo.x = FlxG.width / 2 - logo.width / 2;
-		logo.y = yOffset;
+		logo.x = 0;
+		logo.y = 2;
 		add(logo);
 
-		var rows = [
-			[1, 0, 0, 0, 0, 0, 0, 1],
-			[2, 2, 2, 2, 2, 2, 2, 2],
-			[4, 4, 3, 4, 4, 4, 4, 4],
-			[4, 4, 4, 4, 3, 3, 4, 4]
-		];
-		var tilemap = new FlxTilemap();
-		tilemap.loadMapFrom2DArray(rows, AssetPaths.tileset__png, 8, 8);
-		tilemap.x = 0;
-		tilemap.y = FlxG.height - tilemap.height;
-		add(tilemap);
+		FlxTween.tween(logo, {y: 0}, 1, {
+			type: FlxTweenType.PINGPONG,
+			ease: FlxEase.cubeInOut,
+		});
 
 		_textBlinkTimerMax = 1;
 		_textBlinkTimer = _textBlinkTimerMax;
 
 		_pressAnyKeyText = new FlxBitmapText(FontManager.instance.getScoreFontBitmap());
-		_pressAnyKeyText.text = "PRESS\nANY KEY";
+		_pressAnyKeyText.text = "PRESS ANY KEY";
 		FontManager.instance.setBitmapTextShadow(_pressAnyKeyText);
 		FontManager.instance.setBitmapTextCentered(_pressAnyKeyText);
 		_pressAnyKeyText.y = FlxG.height - _pressAnyKeyText.height - 2;
