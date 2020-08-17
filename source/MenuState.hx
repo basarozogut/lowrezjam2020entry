@@ -68,6 +68,7 @@ class MenuState extends FlxState
 		FlxG.sound.playMusic(AssetPaths.lowrezjam2020_intro__ogg, .4, true);
 
 		FlxG.mouse.visible = false;
+		FlxG.mouse.useSystemCursor = true;
 
 		super.create();
 	}
