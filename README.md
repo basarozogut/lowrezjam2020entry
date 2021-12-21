@@ -8,4 +8,10 @@ LOWREZJAM 2020 was a game jam that had an extreme constraint of 64x64 resolution
 - Music is composed using DAWs.
 - Only assets that arent created by me are fonts.
 
-Game can be played at: https://chillwaves.itch.io/slippery-when-frozen
+<p align="center">
+  <img width="485" height="485" src="https://img.itch.zone/aW1hZ2UvNzMwODc0LzQwNjM0MzguZ2lm/original/ePvVfQ.gif">
+</p>
+
+<p align="center">
+  Game can be played at: https://chillwaves.itch.io/slippery-when-frozen
+</p>
