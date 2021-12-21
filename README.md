@@ -9,7 +9,7 @@ LOWREZJAM 2020 was a game jam that had an extreme constraint of 64x64 resolution
 - Only assets that arent created by me are fonts.
 
 <p align="center">
-  <img width="485" height="485" src="https://img.itch.zone/aW1hZ2UvNzMwODc0LzQwNjM0MzguZ2lm/original/ePvVfQ.gif">
+  <img width="485" src="https://img.itch.zone/aW1hZ2UvNzMwODc0LzQwNjM0MzguZ2lm/original/ePvVfQ.gif">
 </p>
 
 <p align="center">
