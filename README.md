@@ -6,7 +6,7 @@ LOWREZJAM 2020 was a game jam that had an extreme constraint of 64x64 resolution
 - Graphics are created with Asesprite which is my favorite pixel-art tool.
 - Sfx is generated with sfxr.
 - Music is composed using DAWs.
-- Only assets that arent created by me are fonts.
+- Only assets that aren't created by me are fonts.
 
 <p align="center">
   <img width="485" src="https://img.itch.zone/aW1hZ2UvNzMwODc0LzQwNjM0MzguZ2lm/original/ePvVfQ.gif">
